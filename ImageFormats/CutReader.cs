@@ -8,11 +8,20 @@ Decoder for Dr. Halo CUT (.CUT) images.
 Decodes all CUT images that I've found in the wild.  If you find
 one that it fails to decode, let me know!
 
-Copyright 2013 by Warren Galyen
-You may use this source code in your application(s) free of charge,
-as long as attribution is given to me (Warren Galyen) and my URL
-(https://mechanikadesign.com) in your application's "about" box and/or
-documentation.
+Copyright 2013-2020 by Warren Galyen
+https://www.mechanikadesign.com
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
 */
 
