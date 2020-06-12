@@ -3,6 +3,20 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 
+/*
+ 
+This is a class library that contains image decoders for old and/or
+obscure image formats (.TGA, .PCX, .PPM, RAS, etc.). Refer to the
+individual source code files for each image type for more information.
+
+Copyright 2013 by Warren Galyen
+You may use this source code in your application(s) free of charge,
+as long as attribution is given to me (Warren Galyen) and my URL
+(https://mechanikadesign.com) in your application's "about" box and/or
+documentation.
+
+*/
+
 namespace MechanikaDesign.ImageFormats
 {
     public static class Picture
