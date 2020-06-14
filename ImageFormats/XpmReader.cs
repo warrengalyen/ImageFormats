@@ -11,7 +11,7 @@ Decoder for XPM icons.
 Handles a good majority of icons, but will probably stumble on icons
 that use custom color names (instead of hex values).
 
-Copyright 2013-2020 by Warren Galyen
+Copyright 2020 by Warren Galyen
 https://www.mechanikadesign.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -169,27 +169,6 @@ namespace MechanikaDesign.ImageFormats
             System.Runtime.InteropServices.Marshal.Copy(bmpData, 0, bmpBits.Scan0, bmpData.Length);
             bmp.UnlockBits(bmpBits);
             return bmp;
-        }
-
-        private static string ReadLine(Stream stream)
-        {
-            string str = "";
-            byte[] lineBytes = new byte[1024];
-            int startPos = (int)stream.Position;
-            stream.Read(lineBytes, 0, 1024);
-            int strLen = 0;
-            while (strLen < 1024)
-            {
-                if ((lineBytes[strLen] == '\r') || (lineBytes[strLen] == '\n')) { strLen++; break; }
-                strLen++;
-            }
-            if (strLen > 1)
-            {
-                str = Encoding.ASCII.GetString(lineBytes, 0, strLen - 1);
-            }
-
-            stream.Position = startPos + strLen;
-            return str;
         }
 
         private static string ReadUntil(Stream stream, char stopChar)
