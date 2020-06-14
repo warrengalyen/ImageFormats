@@ -9,11 +9,20 @@ This is a class library that contains image decoders for old and/or
 obscure image formats (.TGA, .PCX, .PPM, RAS, etc.). Refer to the
 individual source code files for each image type for more information.
 
-Copyright 2013 by Warren Galyen
-You may use this source code in your application(s) free of charge,
-as long as attribution is given to me (Warren Galyen) and my URL
-(https://mechanikadesign.com) in your application's "about" box and/or
-documentation.
+Copyright 2013-2020 by Warren Galyen
+https://www.mechanikadesign.com
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 
 */
 
@@ -45,6 +54,12 @@ namespace MechanikaDesign.ImageFormats
             {
                 if (Path.GetExtension(fileName).ToLower().Contains("sgi") || Path.GetExtension(fileName).ToLower().Contains("rgb") || Path.GetExtension(fileName).ToLower().Contains("bw"))
                     bmp = SgiReader.Load(fileName);
+            }
+
+            if (bmp == null)
+            {
+                if (Path.GetExtension(fileName).ToLower().Contains("xpm"))
+                    bmp = XpmReader.Load(fileName);
             }
 
             return bmp;

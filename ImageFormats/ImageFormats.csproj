@@ -67,6 +67,7 @@
     <Compile Include="RasReader.cs" />
     <Compile Include="SgiReader.cs" />
     <Compile Include="TgaReader.cs" />
+    <Compile Include="XpmReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="FormMain.resx">
