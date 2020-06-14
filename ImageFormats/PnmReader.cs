@@ -35,6 +35,7 @@ namespace MechanikaDesign.ImageFormats
     /// </summary>
     public static class PnmReader
     {
+
         /// <summary>
         /// Load a portable picture map (either PPM, PGM, or PBM) into a Bitmap object.
         /// </summary>
@@ -63,32 +64,58 @@ namespace MechanikaDesign.ImageFormats
             char pnmType;
             int bmpWidth = -1, bmpHeight = -1, bmpMaxVal = -1;
 
-            // check if the format is correct
+            //check if the format is correct...
             if ((char)stream.ReadByte() != 'P') throw new ApplicationException("Incorrect file format.");
             pnmType = (char)stream.ReadByte();
             if ((pnmType < '1') || (pnmType > '6')) throw new ApplicationException("Unrecognized bitmap type.");
 
-            while (stream.Position < stream.Length)
+            //if it's monochrome, it won't have a maxval, so set it to 1
+            if ((pnmType == '1') || (pnmType == '4')) bmpMaxVal = 1;
+
+            int nextByte = stream.ReadByte();
+            stream.Seek(-1, SeekOrigin.Current);
+            if (nextByte == 0x20)
             {
-                line = ReadLine(stream);
-                if (line.Length == 0) continue;
-                if (line[0] == '#') continue;
-                lineArray = line.Split(whitespace, StringSplitOptions.RemoveEmptyEntries);
-                if (lineArray.Length == 0) continue;
-
-                for (int i = 0; i < lineArray.Length; i++)
+                // It's likely space-separated values on the same line, followed by binary data.
+                byte[] bytes = new byte[32];
+                stream.Read(bytes, 0, bytes.Length);
+                stream.Seek(-bytes.Length, SeekOrigin.Current);
+                string str = Encoding.ASCII.GetString(bytes);
+                string[] strArray = str.Split(new char[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
+                if (strArray.Length >= 3)
                 {
-                    if (bmpWidth == -1) { bmpWidth = Convert.ToInt32(lineArray[i]); }
-                    else if (bmpHeight == -1) { bmpHeight = Convert.ToInt32(lineArray[i]); }
-                    else if (bmpMaxVal == -1) { bmpMaxVal = Convert.ToInt32(lineArray[i]); }
-                }
+                    bmpWidth = Convert.ToInt32(strArray[0]);
+                    bmpHeight = Convert.ToInt32(strArray[1]);
+                    bmpMaxVal = Convert.ToInt32(strArray[2]);
 
-                // check if we have all necessary attributes
-                if ((bmpWidth != -1) && (bmpHeight != -1) && (bmpMaxVal != -1))
-                    break;
+                    string searchStr = " " + bmpMaxVal.ToString() + " ";
+                    stream.Seek(str.LastIndexOf(searchStr) + searchStr.Length, SeekOrigin.Current);
+                }
+            }
+            else
+            {
+                while (stream.Position < stream.Length)
+                {
+                    line = ReadLine(stream);
+                    if (line.Length == 0) continue;
+                    if (line[0] == '#') continue;
+                    lineArray = line.Split(whitespace, StringSplitOptions.RemoveEmptyEntries);
+                    if (lineArray.Length == 0) continue;
+
+                    for (int i = 0; i < lineArray.Length; i++)
+                    {
+                        if (bmpWidth == -1) { bmpWidth = Convert.ToInt32(lineArray[i]); }
+                        else if (bmpHeight == -1) { bmpHeight = Convert.ToInt32(lineArray[i]); }
+                        else if (bmpMaxVal == -1) { bmpMaxVal = Convert.ToInt32(lineArray[i]); }
+                    }
+
+                    //check if we have all necessary attributes
+                    if ((bmpWidth != -1) && (bmpHeight != -1) && (bmpMaxVal != -1))
+                        break;
+                }
             }
 
-            // check for nonsensical dimensions
+            //check for nonsensical dimensions
             if ((bmpWidth <= 0) || (bmpHeight <= 0) || (bmpMaxVal <= 0))
                 throw new ApplicationException("Invalid image dimensions.");
 
@@ -98,7 +125,7 @@ namespace MechanikaDesign.ImageFormats
 
             try
             {
-                if (pnmType == '1') // monochrome bitmap (ascii)
+                if (pnmType == '1') //monochrome bitmap (ascii)
                 {
                     int elementCount = 0;
                     byte elementVal;
@@ -121,7 +148,7 @@ namespace MechanikaDesign.ImageFormats
                         if (elementCount >= maxElementCount) break;
                     }
                 }
-                else if (pnmType == '2') // grayscale bitmap (ascii)
+                else if (pnmType == '2') //grayscale bitmap (ascii)
                 {
                     int elementCount = 0;
                     int elementVal;
@@ -144,7 +171,7 @@ namespace MechanikaDesign.ImageFormats
                         if (elementCount >= maxElementCount) break;
                     }
                 }
-                else if (pnmType == '3') // color bitmap (ascii)
+                else if (pnmType == '3') //color bitmap (ascii)
                 {
                     int elementCount = 0, elementMod = 2;
                     int elementVal;
@@ -166,7 +193,7 @@ namespace MechanikaDesign.ImageFormats
                         if (elementCount >= maxElementCount) break;
                     }
                 }
-                else if (pnmType == '4') // monochrome bitmap (binary)
+                else if (pnmType == '4') //monochrome bitmap (binary)
                 {
                     byte pixel, pixelVal;
                     int elementCount = 0;
@@ -243,7 +270,7 @@ namespace MechanikaDesign.ImageFormats
             }
             catch (Exception e)
             {
-                // give a partial image in case of unexpected end-of-file
+                //give a partial image in case of unexpected end-of-file
 
                 System.Diagnostics.Debug.WriteLine("Error while processing PNM file: " + e.Message);
             }
@@ -254,6 +281,7 @@ namespace MechanikaDesign.ImageFormats
             bmp.UnlockBits(bmpBits);
             return bmp;
         }
+
 
         private static char[] whitespace = { ' ', '\t', '\r', '\n' };
 
@@ -266,20 +294,15 @@ namespace MechanikaDesign.ImageFormats
             int strLen = 0;
             while (strLen < 1024)
             {
-                if ((lineBytes[strLen] == '\r') || (lineBytes[strLen] == '\n'))
-                {
-                    strLen++;
-                    break;
-                }
+                if ((lineBytes[strLen] == '\r') || (lineBytes[strLen] == '\n')) { strLen++; break; }
                 strLen++;
             }
             if (strLen > 1)
-            {
                 str = Encoding.ASCII.GetString(lineBytes, 0, strLen - 1);
-            }
 
             stream.Position = startPos + strLen;
             return str;
         }
+
     }
 }
