@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Mechanika Design")]
 [assembly: AssemblyProduct("ImageFormats")]
-[assembly: AssemblyCopyright("Copyright © Warren Galyen 2013")]
+[assembly: AssemblyCopyright("Copyright © Warren Galyen 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
