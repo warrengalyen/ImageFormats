@@ -62,12 +62,6 @@ namespace MechanikaDesign.ImageFormats
                     bmp = XpmReader.Load(fileName);
             }
 
-            if (bmp == null)
-            {
-                if (Path.GetExtension(fileName).ToLower().Contains("mac"))
-                    bmp = MacPaintReader.Load(fileName);
-            }
-
             return bmp;
         }
 
@@ -95,6 +89,10 @@ namespace MechanikaDesign.ImageFormats
             else if ((header[0x80] == 'D') && (header[0x81] == 'I') && (header[0x82] == 'C') && (header[0x83] == 'M'))
             {
                 bmp = DicomReader.Load(stream);
+            }
+            else if ((header[0x41] == 'P') && (header[0x42] == 'N') && (header[0x43] == 'T') && (header[0x44] == 'G'))
+            {
+                bmp = MacPaintReader.Load(stream);
             }
 
             return bmp;
