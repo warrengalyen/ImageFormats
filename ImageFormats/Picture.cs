@@ -62,6 +62,12 @@ namespace MechanikaDesign.ImageFormats
                     bmp = XpmReader.Load(fileName);
             }
 
+            if (bmp == null)
+            {
+                if (Path.GetExtension(fileName).ToLower().Contains("mac"))
+                    bmp = MacPaintReader.Load(fileName);
+            }
+
             return bmp;
         }
 

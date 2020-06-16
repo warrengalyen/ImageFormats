@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MacPaintReader.cs" />
     <Compile Include="CutReader.cs" />
     <Compile Include="DicomReader.cs" />
     <Compile Include="FormMain.cs">
