@@ -7,7 +7,7 @@
     <ProjectGuid>{4713BD50-7E76-45BE-B8D9-EA0FC8B1DCE5}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ImageFormats</RootNamespace>
+    <RootNamespace>Mechanika.ImageFormats</RootNamespace>
     <AssemblyName>ImageFormats</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -46,6 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormMain1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FormMain.resx</DependentUpon>
+    </Compile>
     <Compile Include="MacPaintReader.cs" />
     <Compile Include="CutReader.cs" />
     <Compile Include="DicomReader.cs" />
@@ -68,6 +73,7 @@
     <Compile Include="RasReader.cs" />
     <Compile Include="SgiReader.cs" />
     <Compile Include="TgaReader.cs" />
+    <Compile Include="Util.cs" />
     <Compile Include="XpmReader.cs" />
   </ItemGroup>
   <ItemGroup>
