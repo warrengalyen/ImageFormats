@@ -7,7 +7,7 @@ using System.Drawing;
  
 Decoder for MacPaint (*.MAC) images.
 
-Copyright 2013-2020 by Warren Galyen
+Copyright 2020 by Warren Galyen
 https://www.mechanikadesign.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
