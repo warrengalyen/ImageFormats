@@ -114,7 +114,7 @@ namespace MechanikaDesign.ImageFormats
 
                     // initialize palette and randomize it.
                     // TODO: initialize palette colors to known Amiga values?
-                    if (numPlanes <= 16)
+                    if (numPlanes < 12)
                     {
                         int numColors = 1 << numPlanes;
                         palette = new byte[numColors * 3];
@@ -142,14 +142,14 @@ namespace MechanikaDesign.ImageFormats
                 }
             }
 
-            if (imgWidth == -1 || imgHeight == -1 || (numPlanes > 16 && numPlanes != 24 && numPlanes != 32))
+            if (imgWidth == -1 || imgHeight == -1 || (numPlanes > 12 && numPlanes != 24 && numPlanes != 32))
             {
                 throw new ApplicationException("Invalid format of ILBM file.");
             }
 
             if (maskType == 1)
             {
-                Console.WriteLine("yes.");
+                throw new ApplicationException("ILBM images with mask plane not yet implemented.");
             }
 
             RleReader rleReader = new RleReader(stream);
@@ -186,7 +186,7 @@ namespace MechanikaDesign.ImageFormats
                         var bp = new BitPlaneReader(scanLine, bytesPerBitPlane * b);
                         for (int x = 0; x < imgWidth; x++)
                         {
-                            imageLine[x] |= (byte)(bp.NextBit() << b);
+                            imageLine[x] |= (uint)bp.NextBit() << b;
                         }
                     }
 
@@ -200,9 +200,9 @@ namespace MechanikaDesign.ImageFormats
                     {
                         for (int x = 0; x < imgWidth; x++)
                         {
-                            bmpData[4 * (y * imgWidth + x)] = (byte)(scanLine[x] & 0xFF);
-                            bmpData[4 * (y * imgWidth + x) + 1] = (byte)((scanLine[x] & 0xFF00) >> 8);
-                            bmpData[4 * (y * imgWidth + x) + 2] = (byte)((scanLine[x] & 0xFF0000) >> 16);
+                            bmpData[4 * (y * imgWidth + x)] = (byte)(imageLine[x] & 0xFF);
+                            bmpData[4 * (y * imgWidth + x) + 1] = (byte)((imageLine[x] >> 8) & 0xFF);
+                            bmpData[4 * (y * imgWidth + x) + 2] = (byte)((imageLine[x] >> 16) & 0xFF);
                             bmpData[4 * (y * imgWidth + x) + 3] = 0xFF;
                         }
                     }
@@ -362,6 +362,7 @@ namespace MechanikaDesign.ImageFormats
                         curByte = stream.ReadByte();
                         for (int i = 0; i < runLength; i++)
                         {
+                            if (bytesRead >= bytesNeeded) { break; }
                             bytes[bytesRead++] = (byte)curByte;
                         }
                     }
@@ -370,6 +371,7 @@ namespace MechanikaDesign.ImageFormats
                         runLength = 1 + (int)op;
                         for (int i = 0; i < runLength; i++)
                         {
+                            if (bytesRead >= bytesNeeded) { break; }
                             bytes[bytesRead++] = (byte)stream.ReadByte();
                         }
                     }
