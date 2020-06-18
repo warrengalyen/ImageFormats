@@ -190,6 +190,8 @@ namespace MechanikaDesign.ImageFormats
                         }
                     }
 
+                    int prevR = 0, prevG = 0, prevB = 0;
+                    int index;
 
                     // apply mask plane?
 
@@ -208,9 +210,8 @@ namespace MechanikaDesign.ImageFormats
                     {
                         int hamShift = numPlanes - 2;
                         int valMask = (1 << hamShift) - 1;
+                        int valShift = 8 - hamShift;
                         int hamVal;
-                        int index;
-                        int prevR = 0, prevG = 0, prevB = 0;
 
                         for (int x = 0; x < imgWidth; x++)
                         {
@@ -235,20 +236,27 @@ namespace MechanikaDesign.ImageFormats
                                 }
                                 else if (hamVal == 2)
                                 {
-                                    prevR = (index << 4) | index;
+                                    prevR = (index << valShift) | index;
                                 }
                                 else if (hamVal == 1)
                                 {
-                                    prevB = (index << 4) | index;
+                                    prevB = (index << valShift) | index;
                                 }
                                 else if (hamVal == 3)
                                 {
-                                    prevG = (index << 4) | index;
+                                    prevG = (index << valShift) | index;
                                 }
                                 bmpData[4 * (y * imgWidth + x)] = (byte)prevB;
                                 bmpData[4 * (y * imgWidth + x) + 1] = (byte)prevG;
                                 bmpData[4 * (y * imgWidth + x) + 2] = (byte)prevR;
                                 bmpData[4 * (y * imgWidth + x) + 3] = 0xFF;
+
+                                if (modeHalfBrite)
+                                {
+                                    bmpData[4 * (y * imgWidth + x)] >>= 1;
+                                    bmpData[4 * (y * imgWidth + x) + 1] >>= 1;
+                                    bmpData[4 * (y * imgWidth + x) + 2] >>= 1;
+                                }
                             }
                         }
                     }
@@ -256,7 +264,8 @@ namespace MechanikaDesign.ImageFormats
                     {
                         for (int x = 0; x < imgWidth; x++)
                         {
-                            if (maskType == 2 && imageLine[x] == transparentColor)
+                            index = (int)imageLine[x];
+                            if (maskType == 2 && index == transparentColor)
                             {
                                 bmpData[4 * (y * imgWidth + x)] = 0;
                                 bmpData[4 * (y * imgWidth + x) + 1] = 0;
@@ -265,10 +274,20 @@ namespace MechanikaDesign.ImageFormats
                             }
                             else
                             {
-                                bmpData[4 * (y * imgWidth + x)] = (byte)palette[imageLine[x] * 3 + 2];
-                                bmpData[4 * (y * imgWidth + x) + 1] = (byte)palette[imageLine[x] * 3 + 1];
-                                bmpData[4 * (y * imgWidth + x) + 2] = (byte)palette[imageLine[x] * 3];
-                                bmpData[4 * (y * imgWidth + x) + 3] = 0xFF;
+                                prevR = palette[index * 3];
+                                prevG = palette[index * 3 + 1];
+                                prevB = palette[index * 3 + 2];
+
+                                bmpData[4 * (y * imgWidth + x)] = (byte)prevB;
+                                bmpData[4 * (y * imgWidth + x) + 1] = (byte)prevG;
+                                bmpData[4 * (y * imgWidth + x) + 2] = (byte)prevR;
+
+                                if (modeHalfBrite)
+                                {
+                                    bmpData[4 * (y * imgWidth + x)] >>= 1;
+                                    bmpData[4 * (y * imgWidth + x) + 1] >>= 1;
+                                    bmpData[4 * (y * imgWidth + x) + 2] >>= 1;
+                                }
                             }
                         }
                     }

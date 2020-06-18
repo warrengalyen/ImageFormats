@@ -51,6 +51,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>FormMain.resx</DependentUpon>
     </Compile>
+    <Compile Include="IlbmReader.cs" />
     <Compile Include="MacPaintReader.cs" />
     <Compile Include="CutReader.cs" />
     <Compile Include="DicomReader.cs" />
