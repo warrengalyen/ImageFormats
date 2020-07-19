@@ -13,3 +13,4 @@ imageformats
 - .CUT (Dr. Halo)
 - .XPM (X Window PixMap)
 - .DICOM (experimental support)
+- .DDS (DirectDraw Surface images)
