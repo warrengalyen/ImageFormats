@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mechanika.ImageFormats;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Text;
@@ -60,6 +61,12 @@ namespace MechanikaDesign.ImageFormats
             {
                 if (Path.GetExtension(fileName).ToLower().Contains("xpm"))
                     bmp = XpmReader.Load(fileName);
+            }
+
+            if (bmp == null)
+            {
+                if (Path.GetExtension(fileName).ToLower().Contains("dds"))
+                    bmp = DdsReader.Load(fileName);
             }
 
             return bmp;
