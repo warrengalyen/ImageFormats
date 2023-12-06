@@ -19,7 +19,7 @@ namespace Mechanika.ImageFormats {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class FormMain {
@@ -129,11 +129,31 @@ namespace Mechanika.ImageFormats {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Size similar to {Width=112, Height=22}.
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Size openToolStripMenuItem_Size {
+        internal static System.Drawing.Bitmap mnuOpen_Image {
             get {
-                object obj = ResourceManager.GetObject("openToolStripMenuItem.Size", resourceCulture);
+                object obj = ResourceManager.GetObject("mnuOpen.Image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Windows.Forms.Keys similar to O, Control.
+        /// </summary>
+        internal static System.Windows.Forms.Keys mnuOpen_ShortcutKeys {
+            get {
+                object obj = ResourceManager.GetObject("mnuOpen.ShortcutKeys", resourceCulture);
+                return ((System.Windows.Forms.Keys)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Size similar to {Width=180, Height=22}.
+        /// </summary>
+        internal static System.Drawing.Size mnuOpen_Size {
+            get {
+                object obj = ResourceManager.GetObject("mnuOpen.Size", resourceCulture);
                 return ((System.Drawing.Size)(obj));
             }
         }
@@ -141,9 +161,48 @@ namespace Mechanika.ImageFormats {
         /// <summary>
         ///   Looks up a localized string similar to Open....
         /// </summary>
-        internal static string openToolStripMenuItem_Text {
+        internal static string mnuOpen_Text {
             get {
-                return ResourceManager.GetString("openToolStripMenuItem.Text", resourceCulture);
+                return ResourceManager.GetString("mnuOpen.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mnuSaveAs_Image {
+            get {
+                object obj = ResourceManager.GetObject("mnuSaveAs.Image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Windows.Forms.Keys similar to S, Control.
+        /// </summary>
+        internal static System.Windows.Forms.Keys mnuSaveAs_ShortcutKeys {
+            get {
+                object obj = ResourceManager.GetObject("mnuSaveAs.ShortcutKeys", resourceCulture);
+                return ((System.Windows.Forms.Keys)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Size similar to {Width=180, Height=22}.
+        /// </summary>
+        internal static System.Drawing.Size mnuSaveAs_Size {
+            get {
+                object obj = ResourceManager.GetObject("mnuSaveAs.Size", resourceCulture);
+                return ((System.Drawing.Size)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save as....
+        /// </summary>
+        internal static string mnuSaveAs_Text {
+            get {
+                return ResourceManager.GetString("mnuSaveAs.Text", resourceCulture);
             }
         }
         

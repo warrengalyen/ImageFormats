@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
 
 /*
@@ -33,7 +34,7 @@ namespace ImageViewer
         public FormMain()
         {
             InitializeComponent();
-            this.Text = Application.ProductName;
+            Text = Application.ProductName;
         }
 
         private void FormMain_DragEnter(object sender, DragEventArgs e)
@@ -51,34 +52,31 @@ namespace ImageViewer
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var openDlg = new OpenFileDialog();
-            openDlg.DefaultExt = ".*";
-            openDlg.CheckFileExists = true;
-            openDlg.Title = Resources.openDlgTitle;
-            openDlg.Filter = "All Files (*.*)|*.*";
-            openDlg.FilterIndex = 1;
+            var openDlg = new OpenFileDialog
+            {
+                DefaultExt = ".*",
+                CheckFileExists = true,
+                Title = Resources.openDlgTitle,
+                Filter = Resources.openDlgFilter,
+                FilterIndex = 1
+            };
             if (openDlg.ShowDialog() == DialogResult.Cancel) return;
             OpenFile(openDlg.FileName);
-        }
+    }
 
-        private void OpenFile(string fileName)
+    private void OpenFile(string fileName)
+    {
+        try
         {
-            try
-            {
-                Bitmap bmp = null;
-                bmp = MechanikaDesign.ImageFormats.Picture.Load(fileName);
-
+                Bitmap bmp = MechanikaDesign.ImageFormats.Picture.Load(fileName);
                 if (bmp == null)
                 {
                     //try loading the file natively...
-                    try { bmp = (Bitmap)Bitmap.FromFile(fileName); }
-                    catch (Exception e) { Debug.WriteLine(e.Message); }
-                }
+                    try { bmp = (Bitmap)Image.FromFile(fileName); }
+                catch (Exception e) { Debug.WriteLine(e.Message); }
+            }
 
-                if (bmp == null)
-                    throw new ApplicationException(Resources.errorLoadFailed);
-
-                pictureBox1.Image = bmp;
+                pictureBox1.Image = bmp ?? throw new ApplicationException(Resources.errorLoadFailed);
                 pictureBox1.Size = bmp.Size;
             }
             catch (Exception e)
@@ -87,5 +85,32 @@ namespace ImageViewer
             }
         }
 
+    private void mnuSaveAs_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            var image = pictureBox1.Image;
+            if (image == null)
+            {
+                return;
+            }
+            var saveDlg = new SaveFileDialog
+            {
+                AddExtension = true,
+                OverwritePrompt = true,
+                    Title = Resources.saveDlgTitle,
+                    Filter = Resources.saveDlgFilter,
+                    DefaultExt = ".png",
+                    FilterIndex = 1
+                };
+                if (saveDlg.ShowDialog() == DialogResult.Cancel) return;
+                image.Save(saveDlg.FileName, Path.GetExtension(saveDlg.FileName).ToLower() == ".jpg"
+                    ? System.Drawing.Imaging.ImageFormat.Jpeg : System.Drawing.Imaging.ImageFormat.Png);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
     }
 }

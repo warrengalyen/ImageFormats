@@ -53,6 +53,7 @@
     value   : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
+
     mimetype: application/x-microsoft.net.object.bytearray.base64
     value   : The object must be serialized into a byte array 
             : using a System.ComponentModel.TypeConverter
@@ -124,5 +125,11 @@
   </data>
   <data name="openDlgTitle" xml:space="preserve">
     <value>Open file...</value>
+  </data>
+  <data name="saveDlgFilter" xml:space="preserve">
+    <value>PNG files (*.png)|*.png|JPG files (*.jpg)|*.jpg</value>
+  </data>
+  <data name="saveDlgTitle" xml:space="preserve">
+    <value>Save as...</value>
   </data>
 </root>

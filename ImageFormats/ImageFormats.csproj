@@ -48,21 +48,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DdsReader.cs" />
-    <Compile Include="FormMain1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>FormMain.resx</DependentUpon>
-    </Compile>
-    <Compile Include="IlbmReader.cs" />
-    <Compile Include="MacPaintReader.cs" />
-    <Compile Include="CutReader.cs" />
-    <Compile Include="DicomReader.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormMain1.Designer.cs">
+      <DependentUpon>FormMain.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="IlbmReader.cs" />
+    <Compile Include="MacPaintReader.cs" />
+    <Compile Include="CutReader.cs" />
+    <Compile Include="DicomReader.cs" />
     <Compile Include="PcxReader.cs" />
     <Compile Include="Picture.cs" />
     <Compile Include="PnmReader.cs" />
@@ -82,9 +82,9 @@
   <ItemGroup>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+      <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>FormMain1.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

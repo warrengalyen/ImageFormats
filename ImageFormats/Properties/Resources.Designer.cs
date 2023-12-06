@@ -19,7 +19,7 @@ namespace Mechanika.ImageFormats.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -84,6 +84,24 @@ namespace Mechanika.ImageFormats.Properties {
         internal static string openDlgTitle {
             get {
                 return ResourceManager.GetString("openDlgTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PNG files (*.png)|*.png|JPG files (*.jpg)|*.jpg.
+        /// </summary>
+        internal static string saveDlgFilter {
+            get {
+                return ResourceManager.GetString("saveDlgFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save as....
+        /// </summary>
+        internal static string saveDlgTitle {
+            get {
+                return ResourceManager.GetString("saveDlgTitle", resourceCulture);
             }
         }
     }
