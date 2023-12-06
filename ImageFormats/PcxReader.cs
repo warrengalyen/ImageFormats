@@ -61,8 +61,8 @@ namespace MechanikaDesign.ImageFormats
                 throw new ApplicationException("This is not a valid PCX file.");
 
             var version = (byte)stream.ReadByte();
-            if (tempByte < 2 || tempByte > 5)
-                throw new ApplicationException("Only Version 2, 3, 4, and 5 PCX files are supported.");
+            if (version > 5)
+                throw new ApplicationException("Only Version 5 or lower PCX files are supported.");
 
 
             // This variable controls whether the bit plane values are interpreted as literal color states
