@@ -126,7 +126,7 @@ namespace MechanikaDesign.ImageFormats
                     byte elementVal;
                     while (bytePtr < bytes.Length)
                     {
-                        ReadLineOfInts(bytes, ref bytePtr, lineInts, out lineIntsRead);
+                        ReadLineOfSingleDigitInts(bytes, ref bytePtr, lineInts, out lineIntsRead);
                         for (int i = 0; i < lineIntsRead; i++)
                         {
                             if (elementCount >= maxElementCount) break;
@@ -305,5 +305,26 @@ namespace MechanikaDesign.ImageFormats
             numIntsRead = intIndex;
         }
 
+        private static void ReadLineOfSingleDigitInts(byte[] bytes, ref int bytePtr, int[] intArray, out int numIntsRead)
+        {
+            int intIndex = 0;
+            bool isComment = false;
+            byte b;
+            do
+            {
+                b = bytes[bytePtr++];
+
+                if (!isComment && b >= '0' && b <= '9')
+                {
+                    intArray[intIndex++] = b - '0';
+                }
+
+                if ((b == '\r') || (b == '\n')) { break; }
+                else if (b == '#') { isComment = true; }
+
+            } while (bytePtr < bytes.Length);
+
+            numIntsRead = intIndex;
+        }
     }
 }
