@@ -1,8 +1,6 @@
 ﻿using Mechanika.ImageFormats;
-using System;
 using System.Drawing;
 using System.IO;
-using System.Text;
 
 /*
  
@@ -105,6 +103,10 @@ namespace MechanikaDesign.ImageFormats
                  && (((header[8] == 'I') && (header[9] == 'L') && (header[10] == 'B') && (header[11] == 'M')) || ((header[8] == 'P') && (header[9] == 'B') && (header[10] == 'M'))))
             {
                 bmp = IlbmReader.Load(stream);
+            }
+            else if ((header[0x0] == 1) && (header[0x1] == 0xDA))
+            {
+                bmp = SgiReader.Load(stream);
             }
 
             return bmp;
