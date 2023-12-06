@@ -1,6 +1,6 @@
 ﻿using System;
-using System.IO;
 using System.Drawing;
+using System.IO;
 
 /*
  
@@ -56,10 +56,6 @@ namespace MechanikaDesign.ImageFormats
         /// <returns>Bitmap that contains the image that was read.</returns>
         public static Bitmap Load(Stream stream)
         {
-            int imgWidth = -1;
-            int imgHeight = -1;
-            int imgBpp = -1;
-            Bitmap theBitmap = null;
             BinaryReader reader = new BinaryReader(stream);
 
             byte tempByte = (byte)stream.ReadByte();
@@ -74,7 +70,7 @@ namespace MechanikaDesign.ImageFormats
             if (tempByte != 1)
                 throw new ApplicationException("Invalid PCX compression type.");
 
-            imgBpp = stream.ReadByte();
+            int imgBpp = stream.ReadByte();
             if (imgBpp != 8 && imgBpp != 4 && imgBpp != 2 && imgBpp != 1)
                 throw new ApplicationException("Only 8, 4, 2, and 1-bit PCX samples are supported.");
 
@@ -83,8 +79,8 @@ namespace MechanikaDesign.ImageFormats
             UInt16 xmax = Util.LittleEndian(reader.ReadUInt16());
             UInt16 ymax = Util.LittleEndian(reader.ReadUInt16());
 
-            imgWidth = xmax - xmin + 1;
-            imgHeight = ymax - ymin + 1;
+            int imgWidth = xmax - xmin + 1;
+            int imgHeight = ymax - ymin + 1;
 
             if ((imgWidth < 1) || (imgHeight < 1) || (imgWidth > 32767) || (imgHeight > 32767))
                 throw new ApplicationException("This PCX file appears to have invalid dimensions.");
@@ -297,11 +293,11 @@ namespace MechanikaDesign.ImageFormats
                 System.Diagnostics.Debug.WriteLine("Error while processing PCX file: " + e.Message);
             }
 
-            theBitmap = new Bitmap((int)imgWidth, (int)imgHeight, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
-            System.Drawing.Imaging.BitmapData bmpBits = theBitmap.LockBits(new Rectangle(0, 0, theBitmap.Width, theBitmap.Height), System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+            var bmp = new Bitmap(imgWidth, imgHeight, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+            System.Drawing.Imaging.BitmapData bmpBits = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
             System.Runtime.InteropServices.Marshal.Copy(bmpData, 0, bmpBits.Scan0, imgWidth * 4 * imgHeight);
-            theBitmap.UnlockBits(bmpBits);
-            return theBitmap;
+            bmp.UnlockBits(bmpBits);
+            return bmp;
         }
 
         /// <summary>
