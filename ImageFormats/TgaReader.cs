@@ -41,12 +41,10 @@ namespace MechanikaDesign.ImageFormats
         /// <returns>Bitmap that contains the image that was read.</returns>
         public static Bitmap Load(string fileName)
         {
-            Bitmap bmp = null;
             using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                bmp = Load(fs);
+                return Load(fs);
             }
-            return bmp;
         }
 
         /// <summary>
@@ -57,7 +55,6 @@ namespace MechanikaDesign.ImageFormats
         /// 
         public static Bitmap Load(Stream stream)
         {
-            Bitmap theBitmap = null;
             BinaryReader reader = new BinaryReader(stream);
 
             UInt32[] palette = null;
@@ -398,24 +395,23 @@ namespace MechanikaDesign.ImageFormats
             catch (Exception e)
             {
                 // give a partial image in case of unexpected end-of-file
-
                 System.Diagnostics.Debug.WriteLine("Error while processing TGA file: " + e.Message);
             }
 
-            theBitmap = new Bitmap((int)imgWidth, (int)imgHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            System.Drawing.Imaging.BitmapData bmpBits = theBitmap.LockBits(new Rectangle(0, 0, theBitmap.Width, theBitmap.Height), System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            var bmp = new Bitmap(imgWidth, imgHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            System.Drawing.Imaging.BitmapData bmpBits = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             System.Runtime.InteropServices.Marshal.Copy(bmpData, 0, bmpBits.Scan0, imgWidth * 4 * imgHeight);
-            theBitmap.UnlockBits(bmpBits);
+            bmp.UnlockBits(bmpBits);
 
             int imgOrientation = (imgFlags >> 4) & 0x3;
             if (imgOrientation == 1)
-                theBitmap.RotateFlip(RotateFlipType.RotateNoneFlipX);
+                bmp.RotateFlip(RotateFlipType.RotateNoneFlipX);
             else if (imgOrientation == 2)
-                theBitmap.RotateFlip(RotateFlipType.RotateNoneFlipY);
+                bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
             else if (imgOrientation == 3)
-                theBitmap.RotateFlip(RotateFlipType.RotateNoneFlipXY);
+                bmp.RotateFlip(RotateFlipType.RotateNoneFlipXY);
 
-            return theBitmap;
+            return bmp;
         }
     }
 }

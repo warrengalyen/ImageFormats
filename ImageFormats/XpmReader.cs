@@ -1,8 +1,7 @@
 ﻿using System;
-using System.IO;
-using System.Text;
-using System.Drawing;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 
 
 /*
@@ -45,12 +44,10 @@ namespace MechanikaDesign.ImageFormats
         /// <returns>Bitmap that contains the image that was read.</returns>
         public static Bitmap Load(string fileName)
         {
-            Bitmap bmp = null;
             using (var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                bmp = Load(f);
+                return Load(f);
             }
-            return bmp;
         }
 
         /// <summary>
@@ -60,8 +57,6 @@ namespace MechanikaDesign.ImageFormats
         /// <returns>Bitmap that contains the picture, or null if loading failed.</returns>
         public static Bitmap Load(Stream stream)
         {
-            Bitmap bmp = null;
-            int bmpWidth = -1, bmpHeight = -1, numColors = -1, charsPerPixel = -1;
             var colorDict = new Dictionary<string, UInt32>();
 
             string str;
@@ -76,10 +71,10 @@ namespace MechanikaDesign.ImageFormats
                 throw new ApplicationException("Invalid file format.");
             }
 
-            bmpWidth = Convert.ToInt32(strArray[0]);
-            bmpHeight = Convert.ToInt32(strArray[1]);
-            numColors = Convert.ToInt32(strArray[2]);
-            charsPerPixel = Convert.ToInt32(strArray[3]);
+            int bmpWidth = Convert.ToInt32(strArray[0]);
+            int bmpHeight = Convert.ToInt32(strArray[1]);
+            int numColors = Convert.ToInt32(strArray[2]);
+            int charsPerPixel = Convert.ToInt32(strArray[3]);
 
             // check for nonsensical dimensions
             if ((bmpWidth <= 0) || (bmpHeight <= 0) || (numColors <= 0) || (charsPerPixel <= 0))
@@ -164,7 +159,7 @@ namespace MechanikaDesign.ImageFormats
                 System.Diagnostics.Debug.WriteLine("Error while processing XPM file: " + e.Message);
             }
 
-            bmp = new Bitmap(bmpWidth, bmpHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            var bmp = new Bitmap(bmpWidth, bmpHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             System.Drawing.Imaging.BitmapData bmpBits = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             System.Runtime.InteropServices.Marshal.Copy(bmpData, 0, bmpBits.Scan0, bmpData.Length);
             bmp.UnlockBits(bmpBits);

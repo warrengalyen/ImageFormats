@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Drawing;
-using System.Runtime.InteropServices;
-using System.IO;
 using System.Drawing.Imaging;
+using System.IO;
+using System.Runtime.InteropServices;
 
 /*
  
@@ -37,12 +37,10 @@ namespace Mechanika.ImageFormats
         #region Public Methods
         public static Bitmap Load(string fileName)
         {
-            Bitmap bmp = null;
             using (var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                bmp = Load(f);
+                return Load(f);
             }
-            return bmp;
         }
 
         public static Bitmap Load(Stream stream)

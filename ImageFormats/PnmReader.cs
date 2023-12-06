@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Text;
-using System.Drawing;
 
 /*
  
@@ -45,12 +45,10 @@ namespace MechanikaDesign.ImageFormats
         /// <returns>Bitmap that contains the picture.</returns>
         public static Bitmap Load(string fileName)
         {
-            Bitmap bmp = null;
             using (var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-                bmp = Load(f);
+                return Load(f);
             }
-            return bmp;
         }
 
         /// <summary>
@@ -66,7 +64,6 @@ namespace MechanikaDesign.ImageFormats
 
             int[] lineInts = new int[MAX_INTS_PER_LINE];
             int lineIntsRead;
-            Bitmap bmp = null;
             char pnmType;
             int bmpWidth = -1, bmpHeight = -1, bmpMaxVal = -1;
 
@@ -251,12 +248,11 @@ namespace MechanikaDesign.ImageFormats
             }
             catch (Exception e)
             {
-                //give a partial image in case of unexpected end-of-file
-
+                // give a partial image in case of unexpected end-of-file
                 System.Diagnostics.Debug.WriteLine("Error while processing PNM file: " + e.Message);
             }
 
-            bmp = new Bitmap(bmpWidth, bmpHeight, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
+            var bmp = new Bitmap(bmpWidth, bmpHeight, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
             System.Drawing.Imaging.BitmapData bmpBits = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
             System.Runtime.InteropServices.Marshal.Copy(bmpData, 0, bmpBits.Scan0, bmpData.Length);
             bmp.UnlockBits(bmpBits);

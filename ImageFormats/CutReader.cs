@@ -40,12 +40,10 @@ namespace MechanikaDesign.ImageFormats
         /// <returns>Bitmap that contains the image that was read.</returns>
         public static Bitmap Load(string fileName)
         {
-            Bitmap bmp;
             using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                bmp = Load(fs);
+                return Load(fs);
             }
-            return bmp;
         }
 
         /// <summary>

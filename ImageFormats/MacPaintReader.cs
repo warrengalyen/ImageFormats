@@ -33,12 +33,10 @@ namespace MechanikaDesign.ImageFormats
 
         public static Bitmap Load(string fileName)
         {
-            Bitmap bmp = null;
             using (var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
-                bmp = Load(f);
+                return Load(f);
             }
-            return bmp;
         }
 
         public static Bitmap Load(Stream stream)

@@ -40,12 +40,10 @@ namespace MechanikaDesign.ImageFormats
         /// <returns>Bitmap that contains the image that was read.</returns>
         public static Bitmap Load(string fileName)
         {
-            Bitmap bmp = null;
             using (var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
-                bmp = Load(f);
+                return Load(f);
             }
-            return bmp;
         }
 
         /// <summary>
@@ -72,7 +70,6 @@ namespace MechanikaDesign.ImageFormats
             bool modeHAM = false;
 
             BinaryReader reader = new BinaryReader(stream);
-
 
             byte[] tempBytes = new byte[65536];
 
@@ -412,7 +409,7 @@ namespace MechanikaDesign.ImageFormats
 
         private class BitPlaneReader
         {
-            private byte[] bytes;
+            private readonly byte[] bytes;
             private int currentByte;
             private int bytePtr;
             private int currentBit;
