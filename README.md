@@ -12,5 +12,6 @@ imageformats
 - .MAC (MacPaint)
 - .CUT (Dr. Halo)
 - .XPM (X Window PixMap)
+- .FITS (experimental support)
 - .DICOM (experimental support)
 - .DDS (DirectDraw Surface images)

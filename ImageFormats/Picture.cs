@@ -104,6 +104,10 @@ namespace MechanikaDesign.ImageFormats
             {
                 bmp = IlbmReader.Load(stream);
             }
+            else if ((header[0] == 'S') && (header[1] >= 'I') && (header[2] >= 'M') && (header[3] >= 'P'))
+            {
+                bmp = FitsReader.Load(stream);
+            }
             else if ((header[0x0] == 1) && (header[0x1] == 0xDA))
             {
                 bmp = SgiReader.Load(stream);
