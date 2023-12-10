@@ -8,7 +8,7 @@ This is a class library that contains image decoders for old and/or
 obscure image formats (.TGA, .PCX, .PPM, RAS, etc.). Refer to the
 individual source code files for each image type for more information.
 
-Copyright 2013-2020 by Warren Galyen
+Copyright 2013-2023 by Warren Galyen
 https://www.mechanikadesign.com
 
 Licensed under the Apache License, Version 2.0 (the "License");

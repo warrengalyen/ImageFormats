@@ -8,7 +8,7 @@ using System.Text;
  
 Decoder for FITS (Flexible Image Transport System) images.
 
-Copyright 2013-2020 by Warren Galyen
+Copyright 2023 by Warren Galyen
 https://www.mechanikadesign.com
 
 Licensed under the Apache License, Version 2.0 (the "License");

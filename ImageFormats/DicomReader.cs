@@ -8,7 +8,7 @@ using System.IO;
 Decoder for DICOM images. May not decode all variations of DICOM
 images, since the specification is very broad.
 
-Copyright 2013-2020 by Warren Galyen
+Copyright 2013-2023 by Warren Galyen
 https://www.mechanikadesign.com
 
 Licensed under the Apache License, Version 2.0 (the "License");

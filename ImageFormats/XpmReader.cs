@@ -10,7 +10,7 @@ Decoder for XPM icons.
 Handles a good majority of icons, but will probably stumble on icons
 that use custom color names (instead of hex values).
 
-Copyright 2020 by Warren Galyen
+Copyright 2020-2023 by Warren Galyen
 https://www.mechanikadesign.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
