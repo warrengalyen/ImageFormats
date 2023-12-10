@@ -149,7 +149,7 @@ namespace Mechanika.ImageFormats {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Size similar to {Width=180, Height=22}.
+        ///   Looks up a localized resource of type System.Drawing.Size similar to {Width=161, Height=22}.
         /// </summary>
         internal static System.Drawing.Size mnuOpen_Size {
             get {
@@ -188,7 +188,7 @@ namespace Mechanika.ImageFormats {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Size similar to {Width=180, Height=22}.
+        ///   Looks up a localized resource of type System.Drawing.Size similar to {Width=161, Height=22}.
         /// </summary>
         internal static System.Drawing.Size mnuSaveAs_Size {
             get {
