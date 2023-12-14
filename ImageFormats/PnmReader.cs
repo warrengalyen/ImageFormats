@@ -175,6 +175,7 @@ namespace MechanikaDesign.ImageFormats
                 else if (pnmType == '4') //monochrome bitmap (binary)
                 {
                     byte pixel, pixelVal;
+                    int x = 0;
                     int elementCount = 0;
                     while (true)
                     {
@@ -189,6 +190,13 @@ namespace MechanikaDesign.ImageFormats
                             if (elementCount >= maxElementCount) break;
                         }
                         if (elementCount >= maxElementCount) break;
+                        x++;
+                        if (x >= bmpWidth)
+                        {
+                            // At the end of the current line, disregard any remaining bits of the current byte.
+                            x = 0;
+                            break;
+                        }
                     }
                 }
                 else if (pnmType == '5') //grayscale bitmap (binary)
