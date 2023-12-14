@@ -351,8 +351,8 @@ namespace MechanikaDesign.ImageFormats
             }
             catch (Exception e)
             {
-                // give a partial image in case of unexpected end-of-file
-                System.Diagnostics.Debug.WriteLine("Error while processing DICOM file: " + e.Message);
+                // return a partial image in case of unexpected end-of-file
+                Util.log("Error while processing DICOM file: " + e.Message);
             }
 
             var bmp = new Bitmap(imgWidth, imgHeight, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
@@ -479,7 +479,7 @@ namespace MechanikaDesign.ImageFormats
             if (groupNumber == 0xFFFE)
             {
                 len = (int)getInt(reader, groupNumber, bigEndian);
-                System.Diagnostics.Debug.WriteLine("@" + reader.BaseStream.Position.ToString("X2") + " Skipping FFFE chunk.");
+                Util.log("@" + reader.BaseStream.Position.ToString("X2") + " Skipping FFFE chunk.");
 
                 if (len > 0)
                     reader.BaseStream.Seek(len, SeekOrigin.Current);
@@ -504,11 +504,11 @@ namespace MechanikaDesign.ImageFormats
                                 System.Diagnostics.Debug.WriteLine("Warning: incorrect signature for SQ field.");
                             tempShort = getShort(reader, groupNumber, bigEndian);
                             if (tempShort != (UInt16)0xE000)
-                                System.Diagnostics.Debug.WriteLine("Warning: incorrect signature for SQ field.");
+                                Util.log("Warning: incorrect signature for SQ field.");
 
                             len = (int)getInt(reader, groupNumber, bigEndian);
 
-                            System.Diagnostics.Debug.WriteLine("@" + reader.BaseStream.Position.ToString("X2") + " Group " + groupNumber.ToString("X2") + ", Element " + elementNumber.ToString("X2") + ": " + (char)v1 + (char)v2 + " - " + str);
+                            Util.log("Warning: incorrect signature for SQ field.");
 
                         }
                         else
@@ -516,7 +516,7 @@ namespace MechanikaDesign.ImageFormats
                             if (elementNumber != 0)
                             {
                                 reader.BaseStream.Seek(len, SeekOrigin.Current);
-                                System.Diagnostics.Debug.WriteLine("@" + reader.BaseStream.Position.ToString("X2") + " Group " + groupNumber.ToString("X2") + ", Element " + elementNumber.ToString("X2") + ": " + (char)v1 + (char)v2 + " - " + str);
+                                Util.log("@" + reader.BaseStream.Position.ToString("X2") + " Group " + groupNumber.ToString("X2") + ", Element " + elementNumber.ToString("X2") + ": " + (char)v1 + (char)v2 + " - " + str);
                             }
                         }
 
@@ -525,7 +525,7 @@ namespace MechanikaDesign.ImageFormats
                     {
                         len = getShort(reader, groupNumber, bigEndian);
                         reader.BaseStream.Seek(len, SeekOrigin.Current);
-                        System.Diagnostics.Debug.WriteLine("@" + reader.BaseStream.Position.ToString("X2") + " Group " + groupNumber.ToString("X2") + ", Element " + elementNumber.ToString("X2") + ": " + (char)v1 + (char)v2 + " - " + str);
+                        Util.log("@" + reader.BaseStream.Position.ToString("X2") + " Group " + groupNumber.ToString("X2") + ", Element " + elementNumber.ToString("X2") + ": " + (char)v1 + (char)v2 + " - " + str);
                     }
 
                 }
@@ -537,8 +537,7 @@ namespace MechanikaDesign.ImageFormats
 
                     reader.BaseStream.Seek(len, SeekOrigin.Current);
 
-                    System.Diagnostics.Debug.WriteLine("@" + reader.BaseStream.Position.ToString("X2") + " Group " + groupNumber.ToString("X2") + ", Element " + elementNumber.ToString("X2"));
-
+                    Util.log("@" + reader.BaseStream.Position.ToString("X2") + " Group " + groupNumber.ToString("X2") + ", Element " + elementNumber.ToString("X2"));
                 }
             }
         }

@@ -83,7 +83,7 @@ namespace MechanikaDesign.ImageFormats
                 string idStr = System.Text.Encoding.ASCII.GetString(idBytes);
 
                 // do something with the ID string...
-                System.Diagnostics.Debug.WriteLine("Targa image ID: " + idStr);
+                Util.log("Targa image ID: " + idStr);
             }
 
             // image types:
@@ -394,8 +394,8 @@ namespace MechanikaDesign.ImageFormats
             }
             catch (Exception e)
             {
-                // give a partial image in case of unexpected end-of-file
-                System.Diagnostics.Debug.WriteLine("Error while processing TGA file: " + e.Message);
+                // return a partial image in case of unexpected end-of-file
+                Util.log("Error while processing TGA file: " + e.Message);
             }
 
             var bmp = new Bitmap(imgWidth, imgHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
