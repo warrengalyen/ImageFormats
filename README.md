@@ -12,6 +12,7 @@ imageformats
 - .MAC (MacPaint)
 - .CUT (Dr. Halo)
 - .XPM (X Window PixMap)
+- .DEEP (TVPaint IFF DEEP images)
 - .FITS (experimental support)
 - .DICOM (experimental support)
 - .DDS (DirectDraw Surface images)
