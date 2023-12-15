@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DdsReader.cs" />
+    <Compile Include="DeepReader.cs" />
     <Compile Include="FitsReader.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>

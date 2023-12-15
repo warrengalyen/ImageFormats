@@ -104,6 +104,11 @@ namespace MechanikaDesign.ImageFormats
             {
                 bmp = IlbmReader.Load(stream);
             }
+            else if ((header[0] == 'F') && (header[1] == 'O') && (header[2] == 'R') && (header[3] == 'M')
+                 && (header[8] == 'D') && (header[9] == 'E') && (header[10] == 'E') && (header[11] == 'P'))
+            {
+                bmp = DeepReader.Load(stream);
+            }
             else if ((header[0] == 'S') && (header[1] >= 'I') && (header[2] >= 'M') && (header[3] >= 'P'))
             {
                 bmp = FitsReader.Load(stream);
