@@ -30,7 +30,7 @@ namespace MechanikaDesign.ImageFormats
     /// <summary>
     /// Handles reading ILBM images.
     /// </summary>
-    public static class IlbmReader
+    public static class IffIlbmReader
     {
 
         /// <summary>

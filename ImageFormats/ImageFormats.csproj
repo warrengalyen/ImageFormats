@@ -48,7 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DdsReader.cs" />
-    <Compile Include="DeepReader.cs" />
+    <Compile Include="IffDeepReader.cs" />
     <Compile Include="FitsReader.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
@@ -61,7 +61,7 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="IlbmReader.cs" />
+    <Compile Include="IffIlbmReader.cs" />
     <Compile Include="MacPaintReader.cs" />
     <Compile Include="CutReader.cs" />
     <Compile Include="DicomReader.cs" />

@@ -32,7 +32,7 @@ namespace Mechanika.ImageFormats
     /// <summary>
     /// Handles reading TVPaint DEEP images.
     /// </summary>
-    public static class DeepReader
+    public static class IffDeepReader
     {
         /// <summary>
         /// Reads an DEEP image from a file.
