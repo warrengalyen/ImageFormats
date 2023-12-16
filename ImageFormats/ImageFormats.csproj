@@ -62,6 +62,7 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="IffIlbmReader.cs" />
+    <Compile Include="IffRgbnReader.cs" />
     <Compile Include="MacPaintReader.cs" />
     <Compile Include="CutReader.cs" />
     <Compile Include="DicomReader.cs" />

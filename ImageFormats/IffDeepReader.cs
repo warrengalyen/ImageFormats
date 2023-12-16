@@ -35,7 +35,7 @@ namespace Mechanika.ImageFormats
     public static class IffDeepReader
     {
         /// <summary>
-        /// Reads an DEEP image from a file.
+        /// Reads a DEEP image from a file.
         /// </summary>
         /// <param name="fileName">Name of the file to read.</param>
         /// <returns>Bitmap that contains the image that was read.</returns>
@@ -47,6 +47,11 @@ namespace Mechanika.ImageFormats
             }
         }
 
+        /// <summary>
+        /// Reads a DEEP image from a stream.
+        /// </summary>
+        /// <param name="stream">Stream from which to read the image.</param>
+        /// <returns>Bitmap that contains the image that was read.</returns>
         public static Bitmap Load(Stream stream)
         {
             int imgWidth = -1;
@@ -208,6 +213,10 @@ namespace Mechanika.ImageFormats
                             }
                         }
                     }
+                }
+                else
+                {
+                    throw new ApplicationException("Invalid compression type.");
                 }
             }
             catch (Exception e)
