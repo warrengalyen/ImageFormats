@@ -68,6 +68,7 @@ namespace MechanikaDesign.ImageFormats
             bool modePbm = false;
             bool modeHalfBrite = false;
             bool modeHAM = false;
+            int modeXBMI = -1;
 
             BinaryReader reader = new BinaryReader(stream);
 
@@ -200,6 +201,13 @@ namespace MechanikaDesign.ImageFormats
                             rowPal[c * 3 + 2] = (byte)((b << 4) | b);
                         }
                     }
+                }
+                else if (chunkName == "XBMI")
+                {
+                    modeXBMI = Util.BigEndian(BitConverter.ToUInt16(tempBytes, 0));
+                    // followed by:
+                    // WORD xdpi;
+                    // WORD ydpi;
                 }
             }
 
@@ -373,9 +381,19 @@ namespace MechanikaDesign.ImageFormats
                             }
                             else
                             {
-                                prevR = pal[index * 3];
-                                prevG = pal[index * 3 + 1];
-                                prevB = pal[index * 3 + 2];
+                                if (modeXBMI <= 0)
+                                {
+                                    prevR = pal[index * 3];
+                                    prevG = pal[index * 3 + 1];
+                                    prevB = pal[index * 3 + 2];
+                                }
+                                else if (modeXBMI == 1)
+                                {
+                                    // Grayscale
+                                    prevR = (0xFF >> numPlanes) * index;
+                                    prevG = prevR;
+                                    prevB = prevR;
+                                }
 
                                 bmpData[4 * (y * imgWidth + x)] = (byte)prevB;
                                 bmpData[4 * (y * imgWidth + x) + 1] = (byte)prevG;
