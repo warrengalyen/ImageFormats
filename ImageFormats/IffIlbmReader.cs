@@ -67,6 +67,7 @@ namespace MechanikaDesign.ImageFormats
             bool modeShamLaced = false;
             bool modePbm = false;
             bool modeHalfBrite = false;
+            int halfBriteBit = 0;
             bool modeHAM = false;
             int modeXBMI = -1;
 
@@ -138,10 +139,12 @@ namespace MechanikaDesign.ImageFormats
                     {
                         totalColors = numColorsInChunk;
                     }
-                    for (int c = 0; c < palette.Length; c++)
+                    palette = new byte[chunkSize];
+                    for (int c = 0; c < chunkSize; c++)
                     {
                         palette[c] = tempBytes[c];
                     }
+                    // TODO: scale color map if necesary.
                 }
                 else if (chunkName == "CAMG")
                 {
@@ -228,6 +231,18 @@ namespace MechanikaDesign.ImageFormats
                 modeHAM = true;
             }
 
+            if (modeHalfBrite)
+            {
+                halfBriteBit = 1 << (numPlanes - 1);
+                if ((1 << numPlanes) == totalColors)
+                {
+                    // Cull the color palette if we have halfBrite mode, but too many colors
+                    // exist in the CMAP.
+                    totalColors >>= 1;
+                }
+            }
+            // TODO: cull cmap for HAM mode?
+
             ByteRun1Decoder decompressor = new ByteRun1Decoder(stream);
             byte[] bmpData = new byte[(imgWidth + 1) * 4 * imgHeight];
 
@@ -268,7 +283,7 @@ namespace MechanikaDesign.ImageFormats
                         }
                         else
                         {
-                            throw new ApplicationException("ILBM PBM image with unsupported bit width: " + numPlanes);
+                            throw new ApplicationException("Unsupported bit width: " + numPlanes);
                         }
                     }
                     else
@@ -368,10 +383,12 @@ namespace MechanikaDesign.ImageFormats
                     else
                     {
                         byte[] pal = haveCTBL && rowPalette.Count > y ? rowPalette[y] : palette;
+                        bool halfBrite = false;
 
                         for (int x = 0; x < imgWidth; x++)
                         {
                             index = (int)imageLine[x];
+
                             if (maskType == 2 && index == transparentColor)
                             {
                                 bmpData[4 * (y * imgWidth + x)] = 0;
@@ -381,8 +398,15 @@ namespace MechanikaDesign.ImageFormats
                             }
                             else
                             {
+                                if (modeHalfBrite)
+                                {
+                                    halfBrite = (index & halfBriteBit) != 0;
+                                    index %= totalColors;
+                                }
+
                                 if (modeXBMI <= 0)
                                 {
+                                    // No XBMI mode, or normal palette indexing.
                                     prevR = pal[index * 3];
                                     prevG = pal[index * 3 + 1];
                                     prevB = pal[index * 3 + 2];
@@ -394,12 +418,16 @@ namespace MechanikaDesign.ImageFormats
                                     prevG = prevR;
                                     prevB = prevR;
                                 }
+                                else
+                                {
+                                    throw new ApplicationException("unsupported XBMI mode: " + modeXBMI);
+                                }
 
                                 bmpData[4 * (y * imgWidth + x)] = (byte)prevB;
                                 bmpData[4 * (y * imgWidth + x) + 1] = (byte)prevG;
                                 bmpData[4 * (y * imgWidth + x) + 2] = (byte)prevR;
 
-                                if (modeHalfBrite)
+                                if (halfBrite)
                                 {
                                     bmpData[4 * (y * imgWidth + x)] >>= 1;
                                     bmpData[4 * (y * imgWidth + x) + 1] >>= 1;
