@@ -103,7 +103,7 @@ namespace MechanikaDesign.ImageFormats
             else if ((header[0] == 'F') && (header[1] == 'O') && (header[2] == 'R') && (header[3] == 'M'))
             {
                 string iffType = Encoding.ASCII.GetString(header, 8, 4);
-                if (iffType == "ILBM" || iffType.StartsWith("PBM"))
+                if (iffType == "ILBM" || iffType.StartsWith("PBM") || iffType == "ACBM")
                 {
                     bmp = IffIlbmReader.Load(stream);
                 }
