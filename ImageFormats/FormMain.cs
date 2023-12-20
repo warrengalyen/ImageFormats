@@ -62,22 +62,23 @@ namespace ImageViewer
             };
             if (openDlg.ShowDialog() == DialogResult.Cancel) return;
             OpenFile(openDlg.FileName);
-    }
+        }
 
-    private void OpenFile(string fileName)
-    {
-        try
+        private void OpenFile(string fileName)
         {
+            try
+            {
                 Bitmap bmp = MechanikaDesign.ImageFormats.Picture.Load(fileName);
                 if (bmp == null)
                 {
                     //try loading the file natively...
                     try { bmp = (Bitmap)Image.FromFile(fileName); }
-                catch (Exception e) { Debug.WriteLine(e.Message); }
-            }
+                    catch (Exception e) { Debug.WriteLine(e.Message); }
+                }
 
                 pictureBox1.Image = bmp ?? throw new ApplicationException(Resources.errorLoadFailed);
                 pictureBox1.Size = bmp.Size;
+                this.Text = fileName + " - " + Application.ProductName;
             }
             catch (Exception e)
             {
@@ -85,19 +86,19 @@ namespace ImageViewer
             }
         }
 
-    private void mnuSaveAs_Click(object sender, EventArgs e)
-    {
-        try
+        private void mnuSaveAs_Click(object sender, EventArgs e)
         {
-            var image = pictureBox1.Image;
-            if (image == null)
+            try
             {
-                return;
-            }
-            var saveDlg = new SaveFileDialog
-            {
-                AddExtension = true,
-                OverwritePrompt = true,
+                var image = pictureBox1.Image;
+                if (image == null)
+                {
+                    return;
+                }
+                var saveDlg = new SaveFileDialog
+                {
+                    AddExtension = true,
+                    OverwritePrompt = true,
                     Title = Resources.saveDlgTitle,
                     Filter = Resources.saveDlgFilter,
                     DefaultExt = ".png",
