@@ -5,6 +5,12 @@
     <RootNamespace>Mechanika.ImageFormats</RootNamespace>
     <AssemblyName>ImageFormats</AssemblyName>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Title>ImageFormats</Title>
+    <Authors>Warrem Galyen</Authors>
+    <Copyright>Copyright © Warren Galyen, 2021-2023</Copyright>
+    <PackageProjectUrl>https://mechanikadesign.com</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/warrengalyen/imageformats</RepositoryUrl>
+    <Description>Library for decoding old and obscure image formats.</Description>
   </PropertyGroup>
 
   <ItemGroup>
