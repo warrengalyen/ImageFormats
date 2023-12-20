@@ -1,4 +1,4 @@
-﻿using Mechanika.ImageFormats.Properties;
+﻿using ImageViewer.Properties;
 using System;
 using System.Diagnostics;
 using System.Drawing;

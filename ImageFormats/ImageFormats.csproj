@@ -7,14 +7,16 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <Title>ImageFormats</Title>
     <Authors>Warrem Galyen</Authors>
-    <Copyright>Copyright © Warren Galyen, 2021-2023</Copyright>
+    <Copyright>Copyright © Warren Galyen, 2020-2023</Copyright>
     <PackageProjectUrl>https://mechanikadesign.com</PackageProjectUrl>
     <RepositoryUrl>https://github.com/warrengalyen/imageformats</RepositoryUrl>
     <Description>Library for decoding old and obscure image formats.</Description>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Drawing.Common" Version="5.0.3" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.0" />
+    <PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
   </ItemGroup>
 
 </Project>
