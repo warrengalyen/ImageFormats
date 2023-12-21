@@ -1,7 +1,7 @@
 ﻿using Mechanika.ImageFormats;
+using SixLabors.ImageSharp;
 using System;
 using System.IO;
-using Bitmap = SixLabors.ImageSharp.Image;
 
 /*
  
@@ -45,7 +45,7 @@ namespace MechanikaDesign.ImageFormats
         /// </summary>
         /// <param name="fileName">Name of the file to read.</param>
         /// <returns>Bitmap that contains the image that was read.</returns>
-        public static Bitmap Load(string fileName)
+        public static Image Load(string fileName)
         {
             using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
@@ -58,7 +58,7 @@ namespace MechanikaDesign.ImageFormats
         /// </summary>
         /// <param name="stream">Stream from which to read the image.</param>
         /// <returns>Bitmap that contains the image that was read.</returns>
-        public static Bitmap Load(Stream stream)
+        public static Image Load(Stream stream)
         {
             BinaryReader reader = new BinaryReader(stream);
             UInt32 tempDword = Util.BigEndian(reader.ReadUInt32());
@@ -271,8 +271,7 @@ namespace MechanikaDesign.ImageFormats
                 Util.log("Error while processing RAS file: " + e.Message);
             }
 
-            var bmp = ImageTool.LoadRgb(imgWidth, imgHeight, bmpData);
-            return bmp;
+            return ImageTool.LoadRgb(imgWidth, imgHeight, bmpData);
         }
 
         /// <summary>

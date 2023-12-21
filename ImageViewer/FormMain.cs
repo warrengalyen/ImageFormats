@@ -1,4 +1,5 @@
 ﻿using ImageViewer.Properties;
+using MechanikaDesign.ImageFormats;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -69,7 +70,7 @@ namespace ImageViewer
         {
             try
             {
-                Bitmap bmp = MechanikaDesign.ImageFormats.Picture.Load(fileName).AsNative();
+                var bmp = Picture.Load(fileName).FromImageSharp();
                 if (bmp == null)
                 {
                     //try loading the file natively...

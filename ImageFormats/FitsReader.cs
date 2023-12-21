@@ -1,8 +1,8 @@
 ﻿using MechanikaDesign.ImageFormats;
+using SixLabors.ImageSharp;
 using System;
 using System.IO;
 using System.Text;
-using Bitmap = SixLabors.ImageSharp.Image;
 
 /*
  
@@ -40,7 +40,7 @@ namespace Mechanika.ImageFormats
         /// </summary>
         /// <param name="filename">Name of the file to read.</param>
         /// <returns>Bitmap that contains the image that was read.</returns>
-        public static Bitmap Load(string filename)
+        public static Image Load(string filename)
         {
             using (var f = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
@@ -48,10 +48,10 @@ namespace Mechanika.ImageFormats
             }
         }
 
-        public static Bitmap Load(Stream stream)
+        public static Image Load(Stream stream)
         {
             byte[] tempBytes = new byte[HEADER_ITEM_LENGTH];
-            Bitmap bmp = null;
+            Image bmp = null;
             int maxHeaderItems = 1000;
 
             string itemStr;
@@ -176,7 +176,7 @@ namespace Mechanika.ImageFormats
             return bmp;
         }
 
-        private static Bitmap LoadImageData(Stream stream, int bitsPerPixel, int numAxes, int width, int height, int depth, float[] dataMin, float[] dataMax)
+        private static Image LoadImageData(Stream stream, int bitsPerPixel, int numAxes, int width, int height, int depth, float[] dataMin, float[] dataMax)
         {
             byte[] bmpData = null;
             float f;
@@ -275,8 +275,7 @@ namespace Mechanika.ImageFormats
 
             if (bmpData == null) { return null; }
 
-            var theBitmap = ImageTool.LoadRgb(width, height, bmpData);
-            return theBitmap;
+            return ImageTool.LoadRgb(width, height, bmpData);
         }
 
         private static float ReadSingle(byte[] bytes)

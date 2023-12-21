@@ -1,7 +1,7 @@
 ﻿using Mechanika.ImageFormats;
+using SixLabors.ImageSharp;
 using System;
 using System.IO;
-using Bitmap = SixLabors.ImageSharp.Image;
 
 /*
  
@@ -40,7 +40,7 @@ namespace MechanikaDesign.ImageFormats
         /// </summary>
         /// <param name="fileName">Name of the file to read.</param>
         /// <returns>Bitmap that contains the image that was read.</returns>
-        public static Bitmap Load(string fileName)
+        public static Image Load(string fileName)
         {
             using (var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
@@ -57,7 +57,7 @@ namespace MechanikaDesign.ImageFormats
         /// specified explicitly if you expect this image to use CGA palette information, as defined in
         /// the PCX specification.</param>
         /// <returns>Bitmap that contains the image that was read.</returns>
-        public static Bitmap Load(Stream stream, bool useCgaPalette = false)
+        public static Image Load(Stream stream, bool useCgaPalette = false)
         {
             BinaryReader reader = new BinaryReader(stream);
 
@@ -381,8 +381,7 @@ namespace MechanikaDesign.ImageFormats
                 Util.log("Error while processing PCX file: " + e.Message);
             }
 
-            var bmp = ImageTool.LoadRgb(imgWidth, imgHeight, bmpData);
-            return bmp;
+            return ImageTool.LoadRgb(imgWidth, imgHeight, bmpData);
         }
 
         /// <summary>

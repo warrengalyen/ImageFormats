@@ -1,7 +1,7 @@
 ﻿using Mechanika.ImageFormats;
+using SixLabors.ImageSharp;
 using System.IO;
 using System.Text;
-using Bitmap = SixLabors.ImageSharp.Image;
 
 /*
  
@@ -30,9 +30,9 @@ namespace MechanikaDesign.ImageFormats
 {
     public static class Picture
     {
-        public static Bitmap Load(string fileName)
+        public static Image Load(string fileName)
         {
-            Bitmap bmp = null;
+            Image bmp = null;
             using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
             {
                 bmp = Load(fs);
@@ -71,9 +71,9 @@ namespace MechanikaDesign.ImageFormats
             return bmp;
         }
 
-        public static Bitmap Load(Stream stream)
+        public static Image Load(Stream stream)
         {
-            Bitmap bmp = null;
+            Image bmp = null;
 
             // read the first few bytes of the file to determine what format it is
             byte[] header = new byte[256];

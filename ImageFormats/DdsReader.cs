@@ -1,7 +1,7 @@
-﻿using System;
+﻿using SixLabors.ImageSharp;
+using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using Bitmap = SixLabors.ImageSharp.Image;
 
 /*
  
@@ -9,7 +9,7 @@ Decoder for DirectDraw Surface (.DDS) images.
 Decodes all DS images that I've found in the wild.  If you find
 one that it fails to decode, let me know!
 
-Copyright 2023 by Warren Galyen
+Copyright 2020-2023 by Warren Galyen
 https://www.mechanikadesign.com
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,10 +31,10 @@ namespace Mechanika.ImageFormats
 {
     public static class DdsReader
     {
-        private static Bitmap m_bitmap = null;
+        private static Image m_bitmap = null;
 
         #region Public Methods
-        public static Bitmap Load(string fileName)
+        public static Image Load(string fileName)
         {
             using (var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
@@ -42,7 +42,7 @@ namespace Mechanika.ImageFormats
             }
         }
 
-        public static Bitmap Load(Stream stream)
+        public static Image Load(Stream stream)
         {
             if (stream == null) return null;
             if (!stream.CanRead) return null;

@@ -1,8 +1,8 @@
 ﻿using MechanikaDesign.ImageFormats;
+using SixLabors.ImageSharp;
 using System;
 using System.IO;
 using System.Text;
-using Bitmap = SixLabors.ImageSharp.Image;
 
 
 /*
@@ -39,7 +39,7 @@ namespace Mechanika.ImageFormats
         /// </summary>
         /// <param name="fileName">Name of the file to read.</param>
         /// <returns>Bitmap that contains the image that was read.</returns>
-        public static Bitmap Load(string fileName)
+        public static Image Load(string fileName)
         {
             using (var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
             {
@@ -52,7 +52,7 @@ namespace Mechanika.ImageFormats
         /// </summary>
         /// <param name="stream">Stream from which to read the image.</param>
         /// <returns>Bitmap that contains the image that was read.</returns>
-        public static Bitmap Load(Stream stream, bool wantOpacity = false)
+        public static Image Load(Stream stream, bool wantOpacity = false)
         {
             int imgWidth = -1;
             int imgHeight = -1;
@@ -311,8 +311,7 @@ namespace Mechanika.ImageFormats
                 Util.log("Error while processing DEEP file: " + e.Message);
             }
 
-            var bmp = ImageTool.LoadRgba(imgWidth, imgHeight, bmpData);
-            return bmp;
+            return ImageTool.LoadRgba(imgWidth, imgHeight, bmpData);
         }
 
 

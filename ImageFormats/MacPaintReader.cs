@@ -1,8 +1,8 @@
 ﻿using Mechanika.ImageFormats;
+using SixLabors.ImageSharp;
 using System;
 using System.IO;
 using System.Text;
-using Bitmap = SixLabors.ImageSharp.Image;
 
 /*
  
@@ -32,7 +32,7 @@ namespace MechanikaDesign.ImageFormats
         private const int MAC_PAINT_WIDTH = 576;
         private const int MAC_PAINT_HEIGHT = 720;
 
-        public static Bitmap Load(string fileName)
+        public static Image Load(string fileName)
         {
             using (var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
@@ -40,7 +40,7 @@ namespace MechanikaDesign.ImageFormats
             }
         }
 
-        public static Bitmap Load(Stream stream)
+        public static Image Load(Stream stream)
         {
             byte[] headerBytes = new byte[0x80];
             stream.Read(headerBytes, 0, headerBytes.Length);
@@ -113,8 +113,7 @@ namespace MechanikaDesign.ImageFormats
                 Util.log("Error while processing MacPaint file: " + e.Message);
             }
 
-            var bmp = ImageTool.LoadRgb(MAC_PAINT_WIDTH, MAC_PAINT_HEIGHT, bmpData);
-            return bmp;
+            return ImageTool.LoadRgb(MAC_PAINT_WIDTH, MAC_PAINT_HEIGHT, bmpData);
         }
 
         /// <summary>
