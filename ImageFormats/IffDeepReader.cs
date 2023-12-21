@@ -311,7 +311,7 @@ namespace Mechanika.ImageFormats
                 Util.log("Error while processing DEEP file: " + e.Message);
             }
 
-            return ImageTool.LoadRgba(imgWidth, imgHeight, bmpData);
+            return Util.LoadRgba(imgWidth, imgHeight, bmpData);
         }
 
 

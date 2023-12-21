@@ -1,5 +1,4 @@
-﻿using Mechanika.ImageFormats;
-using SixLabors.ImageSharp;
+﻿using SixLabors.ImageSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -159,7 +158,7 @@ namespace MechanikaDesign.ImageFormats
                 Util.log("Error while processing XPM file: " + e.Message);
             }
 
-            return ImageTool.LoadRgba(bmpWidth, bmpHeight, bmpData);
+            return Util.LoadRgba(bmpWidth, bmpHeight, bmpData);
         }
 
         private static string ReadUntil(Stream stream, char stopChar)

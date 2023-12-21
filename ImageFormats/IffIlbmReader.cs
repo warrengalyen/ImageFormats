@@ -1,5 +1,4 @@
-﻿using Mechanika.ImageFormats;
-using SixLabors.ImageSharp;
+﻿using SixLabors.ImageSharp;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -581,7 +580,7 @@ namespace MechanikaDesign.ImageFormats
                 Util.log("Error while processing ILBM file: " + e.Message);
             }
 
-            var bmp = ImageTool.LoadRgba(imgWidth, imgHeight, bmpData);
+            var bmp = Util.LoadRgba(imgWidth, imgHeight, bmpData);
 
             if (resizeForAspect && xAspect != yAspect && xAspect > 0 && yAspect > 0)
             {

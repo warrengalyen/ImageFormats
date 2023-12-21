@@ -1,5 +1,4 @@
-﻿using Mechanika.ImageFormats;
-using SixLabors.ImageSharp;
+﻿using SixLabors.ImageSharp;
 using System;
 using System.IO;
 using System.Text;
@@ -261,7 +260,7 @@ namespace MechanikaDesign.ImageFormats
                 Util.log("Error while processing PNM file: " + e.Message);
             }
 
-            return ImageTool.LoadRgb(bmpWidth, bmpHeight, bmpData);
+            return Util.LoadRgb(bmpWidth, bmpHeight, bmpData);
         }
 
         private static void ReadLineOfInts(byte[] bytes, ref int bytePtr, int[] intArray, out int numIntsRead)

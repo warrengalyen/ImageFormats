@@ -172,7 +172,7 @@ namespace Mechanika.ImageFormats
                 Util.log("Error while processing RGBN file: " + e.Message);
             }
 
-            return ImageTool.LoadRgba(imgWidth, imgHeight, bmpData);
+            return Util.LoadRgba(imgWidth, imgHeight, bmpData);
         }
 
         private class RgbnDecoder

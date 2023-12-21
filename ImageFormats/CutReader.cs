@@ -1,5 +1,4 @@
-﻿using Mechanika.ImageFormats;
-using SixLabors.ImageSharp;
+﻿using SixLabors.ImageSharp;
 using System;
 using System.IO;
 
@@ -125,7 +124,7 @@ namespace MechanikaDesign.ImageFormats
                 Util.log("Error while processing CUT file: " + e.Message);
             }
 
-            return ImageTool.LoadRgb(imgWidth, imgHeight, bmpData);
+            return Util.LoadRgb(imgWidth, imgHeight, bmpData);
         }
     }
 }

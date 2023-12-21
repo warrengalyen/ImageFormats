@@ -27,7 +27,7 @@ limitations under the License.
 */
 
 
-namespace Mechanika.ImageFormats
+namespace MechanikaDesign.ImageFormats
 {
     public static class DdsReader
     {
@@ -78,7 +78,7 @@ namespace Mechanika.ImageFormats
                 if (data != null)
                 {
                     byte[] rawData = DecompressData(header, data, pixelFormat);
-                    m_bitmap = ImageTool.LoadRgb((int)header.width, (int)header.height, rawData);
+                    m_bitmap = Util.LoadRgb((int)header.width, (int)header.height, rawData);
                 }
             }
         }
