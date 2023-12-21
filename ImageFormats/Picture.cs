@@ -1,7 +1,7 @@
 ﻿using Mechanika.ImageFormats;
-using System.Drawing;
 using System.IO;
 using System.Text;
+using Bitmap = SixLabors.ImageSharp.Image;
 
 /*
  

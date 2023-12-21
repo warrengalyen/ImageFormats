@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
+using Bitmap = SixLabors.ImageSharp.Image;
 
 /*
  
@@ -79,7 +78,7 @@ namespace Mechanika.ImageFormats
                 if (data != null)
                 {
                     byte[] rawData = DecompressData(header, data, pixelFormat);
-                    m_bitmap = CreateBitmap((int)header.width, (int)header.height, rawData);
+                    m_bitmap = ImageTool.LoadRgb((int)header.width, (int)header.height, rawData);
                 }
             }
         }
@@ -119,7 +118,7 @@ namespace Mechanika.ImageFormats
 
             return compdata;
         }
-
+        /*
         private static Bitmap CreateBitmap(int width, int height, byte[] rawData)
         {
             System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
@@ -146,6 +145,7 @@ namespace Mechanika.ImageFormats
             bitmap.UnlockBits(data);
             return bitmap;
         }
+        */
 
         private static bool ReadHeader(BinaryReader reader, ref DDSStruct header)
         {

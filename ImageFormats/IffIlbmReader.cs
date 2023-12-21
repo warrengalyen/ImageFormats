@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Mechanika.ImageFormats;
+using SixLabors.ImageSharp;
+using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Text;
+using Bitmap = SixLabors.ImageSharp.Image;
 
 /*
  
@@ -580,10 +582,7 @@ namespace MechanikaDesign.ImageFormats
                 Util.log("Error while processing ILBM file: " + e.Message);
             }
 
-            var bmp = new Bitmap(imgWidth, imgHeight, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            System.Drawing.Imaging.BitmapData bmpBits = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            System.Runtime.InteropServices.Marshal.Copy(bmpData, 0, bmpBits.Scan0, imgWidth * 4 * imgHeight);
-            bmp.UnlockBits(bmpBits);
+            var bmp = ImageTool.LoadRgba(imgWidth, imgHeight, bmpData);
 
             if (resizeForAspect && xAspect != yAspect && xAspect > 0 && yAspect > 0)
             {
@@ -598,7 +597,7 @@ namespace MechanikaDesign.ImageFormats
                 {
                     newHeight = (int)((float)newHeight / aspect);
                 }
-                bmp = new Bitmap(bmp, new Size(newWidth, newHeight));
+                bmp = bmp.ResizeTo(new Size(newWidth, newHeight));
             }
 
             return bmp;

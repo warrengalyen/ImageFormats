@@ -1,8 +1,8 @@
 ﻿using MechanikaDesign.ImageFormats;
 using System;
-using System.Drawing;
 using System.IO;
 using System.Text;
+using Bitmap = SixLabors.ImageSharp.Image;
 
 /*
  
@@ -275,10 +275,7 @@ namespace Mechanika.ImageFormats
 
             if (bmpData == null) { return null; }
 
-            Bitmap theBitmap = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
-            System.Drawing.Imaging.BitmapData bmpBits = theBitmap.LockBits(new Rectangle(0, 0, theBitmap.Width, theBitmap.Height), System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
-            System.Runtime.InteropServices.Marshal.Copy(bmpData, 0, bmpBits.Scan0, bmpData.Length);
-            theBitmap.UnlockBits(bmpBits);
+            var theBitmap = ImageTool.LoadRgb(width, height, bmpData);
             return theBitmap;
         }
 

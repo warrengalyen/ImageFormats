@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Mechanika.ImageFormats;
+using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
+using Bitmap = SixLabors.ImageSharp.Image;
 
 /*
  
@@ -236,7 +237,7 @@ namespace MechanikaDesign.ImageFormats
             // detect whether the data is really a JPG image
             if ((data[0] == 0xFF) && (data[1] == 0xD8) && (data[2] == 0xFF))
             {
-                return (Bitmap)Image.FromStream(dataStream);
+                return Bitmap.Load(dataStream);
             }
 
 
@@ -355,10 +356,7 @@ namespace MechanikaDesign.ImageFormats
                 Util.log("Error while processing DICOM file: " + e.Message);
             }
 
-            var bmp = new Bitmap(imgWidth, imgHeight, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
-            System.Drawing.Imaging.BitmapData bmpBits = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
-            System.Runtime.InteropServices.Marshal.Copy(bmpData, 0, bmpBits.Scan0, imgWidth * 4 * imgHeight);
-            bmp.UnlockBits(bmpBits);
+            var bmp = ImageTool.LoadRgb(imgWidth, imgHeight, bmpData);
             return bmp;
         }
 

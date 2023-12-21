@@ -1,7 +1,8 @@
-﻿using System;
-using System.Drawing;
+﻿using Mechanika.ImageFormats;
+using System;
 using System.IO;
 using System.Text;
+using Bitmap = SixLabors.ImageSharp.Image;
 
 /*
  
@@ -112,10 +113,7 @@ namespace MechanikaDesign.ImageFormats
                 Util.log("Error while processing MacPaint file: " + e.Message);
             }
 
-            var bmp = new Bitmap(MAC_PAINT_WIDTH, MAC_PAINT_HEIGHT, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
-            System.Drawing.Imaging.BitmapData bmpBits = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), System.Drawing.Imaging.ImageLockMode.ReadWrite, System.Drawing.Imaging.PixelFormat.Format32bppRgb);
-            System.Runtime.InteropServices.Marshal.Copy(bmpData, 0, bmpBits.Scan0, MAC_PAINT_WIDTH * 4 * MAC_PAINT_HEIGHT);
-            bmp.UnlockBits(bmpBits);
+            var bmp = ImageTool.LoadRgb(MAC_PAINT_WIDTH, MAC_PAINT_HEIGHT, bmpData);
             return bmp;
         }
 
