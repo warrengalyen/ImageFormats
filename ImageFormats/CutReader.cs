@@ -60,7 +60,7 @@ namespace MechanikaDesign.ImageFormats
             Util.LittleEndian(reader.ReadUInt16()); // reserved word
 
             if ((imgWidth < 1) || (imgHeight < 1) || (imgWidth > 32767) || (imgHeight > 32767))
-                throw new ApplicationException("This CUT file appears to have invalid dimensions.");
+                throw new ImageDecodeException("This CUT file appears to have invalid dimensions.");
 
             byte[] bmpData = new byte[imgWidth * 4 * imgHeight];
 

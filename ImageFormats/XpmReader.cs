@@ -67,7 +67,7 @@ namespace MechanikaDesign.ImageFormats
             strArray = str.Split(whitespacequote, StringSplitOptions.RemoveEmptyEntries);
             if (strArray.Length < 4)
             {
-                throw new ApplicationException("Invalid file format.");
+                throw new ImageDecodeException("Invalid file format.");
             }
 
             int bmpWidth = Convert.ToInt32(strArray[0]);
@@ -78,7 +78,7 @@ namespace MechanikaDesign.ImageFormats
             // check for nonsensical dimensions
             if ((bmpWidth <= 0) || (bmpHeight <= 0) || (numColors <= 0) || (charsPerPixel <= 0))
             {
-                throw new ApplicationException("Invalid image dimensions.");
+                throw new ImageDecodeException("Invalid image dimensions.");
             }
 
             string sampleChar, sampleValue;

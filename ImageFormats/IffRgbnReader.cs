@@ -57,13 +57,13 @@ namespace Mechanika.ImageFormats
             byte[] tempBytes = new byte[65536];
 
             stream.Read(tempBytes, 0, 4);
-            if (Encoding.ASCII.GetString(tempBytes, 0, 4) != "FORM") { throw new ApplicationException("This is not a valid RGBN file."); }
+            if (Encoding.ASCII.GetString(tempBytes, 0, 4) != "FORM") { throw new ImageDecodeException("This is not a valid RGBN file."); }
 
             uint chunkSize = Util.BigEndian(reader.ReadUInt32());
 
             stream.Read(tempBytes, 0, 4);
             string fileType = Encoding.ASCII.GetString(tempBytes, 0, 4);
-            if (fileType != "RGBN" && fileType != "RGB8") { throw new ApplicationException("This is not a valid RGBN file."); }
+            if (fileType != "RGBN" && fileType != "RGB8") { throw new ImageDecodeException("This is not a valid RGBN file."); }
 
             bool isRgb8 = fileType == "RGB8";
 
@@ -101,7 +101,7 @@ namespace Mechanika.ImageFormats
 
             if (imgWidth == -1 || imgHeight == -1)
             {
-                throw new ApplicationException("Invalid format of RGBN file.");
+                throw new ImageDecodeException("Invalid format of RGBN file.");
             }
 
             byte[] bmpData = new byte[(imgWidth + 1) * 4 * imgHeight];
@@ -163,7 +163,7 @@ namespace Mechanika.ImageFormats
                 }
                 else
                 {
-                    throw new ApplicationException("Invalid compression type.");
+                    throw new ImageDecodeException("Invalid compression type.");
                 }
             }
             catch (Exception e)

@@ -58,18 +58,18 @@ namespace MechanikaDesign.ImageFormats
 
             UInt16 magic = Util.BigEndian(reader.ReadUInt16());
             if (magic != 0x1DA)
-                throw new ApplicationException("Not a valid SGI file.");
+                throw new ImageDecodeException("Not a valid SGI file.");
 
             int compressionType = stream.ReadByte();
             int bytesPerComponent = stream.ReadByte();
             UInt16 dimension = Util.BigEndian(reader.ReadUInt16());
 
             if (compressionType > 1)
-                throw new ApplicationException("Unsupported compression type.");
+                throw new ImageDecodeException("Unsupported compression type.");
             if (bytesPerComponent != 1)
-                throw new ApplicationException("Unsupported bytes per component.");
+                throw new ImageDecodeException("Unsupported bytes per component.");
             if (dimension != 1 && dimension != 2 && dimension != 3)
-                throw new ApplicationException("Unsupported dimension.");
+                throw new ImageDecodeException("Unsupported dimension.");
 
             int imgWidth = Util.BigEndian(reader.ReadUInt16());
             int imgHeight = Util.BigEndian(reader.ReadUInt16());
@@ -78,7 +78,7 @@ namespace MechanikaDesign.ImageFormats
             UInt32 pixMax = Util.BigEndian(reader.ReadUInt32());
 
             if ((imgWidth < 1) || (imgHeight < 1) || (imgWidth > 32767) || (imgHeight > 32767))
-                throw new ApplicationException("This SGI file appears to have invalid dimensions.");
+                throw new ImageDecodeException("This SGI file appears to have invalid dimensions.");
 
             stream.Seek(4, SeekOrigin.Current);
 

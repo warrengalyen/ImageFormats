@@ -70,13 +70,13 @@ namespace Mechanika.ImageFormats
             byte[] tempBytes = new byte[65536];
 
             stream.Read(tempBytes, 0, 4);
-            if (Encoding.ASCII.GetString(tempBytes, 0, 4) != "FORM") { throw new ApplicationException("This is not a valid DEEP file."); }
+            if (Encoding.ASCII.GetString(tempBytes, 0, 4) != "FORM") { throw new ImageDecodeException("This is not a valid DEEP file."); }
 
             uint chunkSize = Util.BigEndian(reader.ReadUInt32());
 
             stream.Read(tempBytes, 0, 4);
             string fileType = Encoding.ASCII.GetString(tempBytes, 0, 4);
-            if (fileType != "DEEP" && fileType != "TVPP") { throw new ApplicationException("This is not a valid DEEP file."); }
+            if (fileType != "DEEP" && fileType != "TVPP") { throw new ImageDecodeException("This is not a valid DEEP file."); }
 
             while (stream.Position < stream.Length)
             {
@@ -136,7 +136,7 @@ namespace Mechanika.ImageFormats
 
             if (imgWidth == -1 || imgHeight == -1)
             {
-                throw new ApplicationException("Invalid format of DEEP file.");
+                throw new ImageDecodeException("Invalid format of DEEP file.");
             }
 
             byte[] bmpData = new byte[(imgWidth + 1) * 4 * imgHeight];
@@ -302,7 +302,7 @@ namespace Mechanika.ImageFormats
                 }
                 else
                 {
-                    throw new ApplicationException("Invalid compression type.");
+                    throw new ImageDecodeException("Invalid compression type.");
                 }
             }
             catch (Exception e)

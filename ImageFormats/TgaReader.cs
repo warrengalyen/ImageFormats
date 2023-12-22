@@ -72,7 +72,7 @@ namespace MechanikaDesign.ImageFormats
             byte imgFlags = (byte)stream.ReadByte();
 
             if (colorMap > 1)
-                throw new ApplicationException("This is not a valid TGA file.");
+                throw new ImageDecodeException("This is not a valid TGA file.");
 
             if (idFieldLength > 0)
             {
@@ -95,17 +95,17 @@ namespace MechanikaDesign.ImageFormats
 
             if ((imageType > 11) || ((imageType > 3) && (imageType < 9)))
             {
-                throw new ApplicationException("This image type (" + imageType + ") is not supported.");
+                throw new ImageDecodeException("This image type (" + imageType + ") is not supported.");
             }
             else if (bitsPerPixel != 8 && bitsPerPixel != 15 && bitsPerPixel != 16 && bitsPerPixel != 24 && bitsPerPixel != 32)
             {
-                throw new ApplicationException("Number of bits per pixel (" + bitsPerPixel + ") is not supported.");
+                throw new ImageDecodeException("Number of bits per pixel (" + bitsPerPixel + ") is not supported.");
             }
             if (colorMap > 0)
             {
                 if (bitsPerColorMap != 15 && bitsPerColorMap != 16 && bitsPerColorMap != 24 && bitsPerColorMap != 32)
                 {
-                    throw new ApplicationException("Number of bits per color map (" + bitsPerPixel + ") is not supported.");
+                    throw new ImageDecodeException("Number of bits per color map (" + bitsPerPixel + ") is not supported.");
                 }
             }
 
