@@ -42,10 +42,8 @@ namespace MechanikaDesign.ImageFormats
         /// <returns>Bitmap that contains the image that was read.</returns>
         public static Image Load(string fileName)
         {
-            using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                return Load(fs);
-            }
+            using var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+            return Load(f);
         }
 
         /// <summary>
@@ -56,10 +54,9 @@ namespace MechanikaDesign.ImageFormats
         /// 
         public static Image Load(Stream stream)
         {
-            BinaryReader reader = new BinaryReader(stream);
+            BinaryReader reader = new(stream);
 
             UInt32[] palette = null;
-            byte[] scanline = null;
 
             byte idFieldLength = (byte)stream.ReadByte();
             byte colorMap = (byte)stream.ReadByte();
@@ -157,6 +154,8 @@ namespace MechanikaDesign.ImageFormats
                         }
                     }
                 }
+
+                byte[] scanline;
 
                 if (imageType == 1 || imageType == 2 || imageType == 3)
                 {
