@@ -178,7 +178,7 @@ namespace MechanikaDesign.ImageFormats
                     {
                         for (int i = 0; i < numPixels; i++)
                         {
-                            pixel = bytes[bytePtr++];
+                            pixel = (byte)(bytes[bytePtr++] * 255 / bmpMaxVal);
                             bmpData[elementCount++] = pixel;
                             bmpData[elementCount++] = pixel;
                             bmpData[elementCount++] = pixel;
@@ -189,8 +189,8 @@ namespace MechanikaDesign.ImageFormats
                     {
                         for (int i = 0; i < numPixels; i++)
                         {
-                            pixel = bytes[bytePtr++];
-                            bytePtr++;
+                            pixel = (byte)(((bytes[bytePtr] << 8) + bytes[bytePtr + 1]) * 255 / bmpMaxVal);
+                            bytePtr += 2;
                             bmpData[elementCount++] = pixel;
                             bmpData[elementCount++] = pixel;
                             bmpData[elementCount++] = pixel;
@@ -205,9 +205,9 @@ namespace MechanikaDesign.ImageFormats
                     {
                         for (int i = 0; i < numPixels; i++)
                         {
-                            bmpData[elementCount++] = bytes[bytePtr + 2];
-                            bmpData[elementCount++] = bytes[bytePtr + 1];
-                            bmpData[elementCount++] = bytes[bytePtr];
+                            bmpData[elementCount++] = (byte)(bytes[bytePtr + 2] * 255 / bmpMaxVal);
+                            bmpData[elementCount++] = (byte)(bytes[bytePtr + 1] * 255 / bmpMaxVal);
+                            bmpData[elementCount++] = (byte)(bytes[bytePtr] * 255 / bmpMaxVal);
                             bytePtr += 3;
                             elementCount++;
                         }
@@ -216,9 +216,9 @@ namespace MechanikaDesign.ImageFormats
                     {
                         for (int i = 0; i < numPixels; i++)
                         {
-                            bmpData[elementCount++] = bytes[bytePtr + 4];
-                            bmpData[elementCount++] = bytes[bytePtr + 2];
-                            bmpData[elementCount++] = bytes[bytePtr];
+                            bmpData[elementCount++] = (byte)(((bytes[bytePtr + 4] << 8) + bytes[bytePtr + 5]) * 255 / bmpMaxVal);
+                            bmpData[elementCount++] = (byte)(((bytes[bytePtr + 2] << 8) + bytes[bytePtr + 3]) * 255 / bmpMaxVal);
+                            bmpData[elementCount++] = (byte)(((bytes[bytePtr] << 8) + bytes[bytePtr + 1]) * 255 / bmpMaxVal);
                             bytePtr += 6;
                             elementCount++;
                         }
