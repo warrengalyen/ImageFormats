@@ -40,10 +40,8 @@ namespace MechanikaDesign.ImageFormats
         /// <returns>Bitmap that contains the image that was read.</returns>
         public static Image Load(string fileName)
         {
-            using (var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                return Load(f);
-            }
+            using var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+            return Load(f);
         }
 
 
@@ -54,7 +52,7 @@ namespace MechanikaDesign.ImageFormats
         /// <returns>Bitmap that contains the image that was read.</returns>
         public static Image Load(Stream stream)
         {
-            BinaryReader reader = new BinaryReader(stream);
+            var reader = new BinaryReader(stream);
 
             UInt16 magic = Util.BigEndian(reader.ReadUInt16());
             if (magic != 0x1DA)

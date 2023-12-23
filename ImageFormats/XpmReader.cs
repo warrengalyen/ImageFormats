@@ -43,10 +43,8 @@ namespace MechanikaDesign.ImageFormats
         /// <returns>Bitmap that contains the image that was read.</returns>
         public static Image Load(string fileName)
         {
-            using (var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                return Load(f);
-            }
+            using var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+            return Load(f);
         }
 
         /// <summary>

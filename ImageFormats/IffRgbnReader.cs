@@ -39,10 +39,8 @@ namespace Mechanika.ImageFormats
         /// <returns>Bitmap that contains the image that was read.</returns>
         public static Image Load(string fileName)
         {
-            using (var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                return Load(f);
-            }
+            using var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+            return Load(f);
         }
 
         public static Image Load(Stream stream)
@@ -52,7 +50,7 @@ namespace Mechanika.ImageFormats
             int numPlanes = 0;
             int compressionType = 0;
 
-            BinaryReader reader = new BinaryReader(stream);
+            var reader = new BinaryReader(stream);
 
             byte[] tempBytes = new byte[65536];
 
@@ -110,7 +108,6 @@ namespace Mechanika.ImageFormats
             {
                 if (compressionType == 3)
                 {
-                    int ptr = 0;
                     for (int y = 0; y < imgHeight; y++)
                     {
                         for (int x = 0; x < imgWidth; x++)
@@ -138,7 +135,6 @@ namespace Mechanika.ImageFormats
                 {
                     var decoder = new RgbnDecoder(stream, isRgb8);
 
-                    int ptr = 0;
                     for (int y = 0; y < imgHeight; y++)
                     {
                         for (int x = 0; x < imgWidth; x++)

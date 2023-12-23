@@ -39,10 +39,8 @@ namespace MechanikaDesign.ImageFormats
         /// <returns>Bitmap that contains the image that was read.</returns>
         public static Image Load(string fileName)
         {
-            using (var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                return Load(f);
-            }
+            using var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+            return Load(f);
         }
 
         /// <summary>
@@ -53,7 +51,7 @@ namespace MechanikaDesign.ImageFormats
         /// 
         public static Image Load(Stream stream)
         {
-            BinaryReader reader = new BinaryReader(stream);
+            var reader = new BinaryReader(stream);
             byte[] tempBytes = new byte[256];
 
             stream.Seek(0x80, SeekOrigin.Current);
@@ -182,7 +180,7 @@ namespace MechanikaDesign.ImageFormats
 
                 // we'll have to read the data by sequential packets
 
-                List<byte[]> dataSegments = new List<byte[]>();
+                var dataSegments = new List<byte[]>();
                 UInt16 tempShort;
                 int segmentLen = 0;
 
@@ -230,7 +228,7 @@ namespace MechanikaDesign.ImageFormats
                 throw new ImageDecodeException("DICOM file does not appear to have any image data.");
 
 
-            MemoryStream dataStream = new MemoryStream(data);
+            var dataStream = new MemoryStream(data);
             reader = new BinaryReader(dataStream);
 
             // detect whether the data is really a JPG image

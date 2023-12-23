@@ -41,10 +41,8 @@ namespace MechanikaDesign.ImageFormats
         /// <returns>Bitmap that contains the image that was read.</returns>
         public static Image Load(string fileName)
         {
-            using (var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                return Load(f);
-            }
+            using var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+            return Load(f);
         }
 
         /// <summary>
@@ -58,7 +56,7 @@ namespace MechanikaDesign.ImageFormats
         /// <returns>Bitmap that contains the image that was read.</returns>
         public static Image Load(Stream stream, bool useCgaPalette = false)
         {
-            BinaryReader reader = new BinaryReader(stream);
+            var reader = new BinaryReader(stream);
 
             byte tempByte = (byte)stream.ReadByte();
             if (tempByte != 10)
@@ -224,7 +222,7 @@ namespace MechanikaDesign.ImageFormats
             stream.Seek(128, SeekOrigin.Begin);
             int x, y, i;
 
-            RleReader rleReader = new RleReader(stream);
+            var rleReader = new RleReader(stream);
 
             try
             {

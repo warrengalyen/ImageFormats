@@ -36,10 +36,8 @@ namespace MechanikaDesign.ImageFormats
         #region Public Methods
         public static Image Load(string fileName)
         {
-            using (var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                return Load(f);
-            }
+            using var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+            return Load(f);
         }
 
         public static Image Load(Stream stream)

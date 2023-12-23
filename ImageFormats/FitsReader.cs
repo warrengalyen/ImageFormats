@@ -40,12 +40,10 @@ namespace Mechanika.ImageFormats
         /// </summary>
         /// <param name="filename">Name of the file to read.</param>
         /// <returns>Bitmap that contains the image that was read.</returns>
-        public static Image Load(string filename)
+        public static Image Load(string fileName)
         {
-            using (var f = new FileStream(filename, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                return Load(f);
-            }
+            using var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+            return Load(f);
         }
 
         public static Image Load(Stream stream)
@@ -82,7 +80,7 @@ namespace Mechanika.ImageFormats
                         else if (headerSeq > 0 && !itemStr.StartsWith("XTENSION")) { return bmp; }
                     }
 
-                    if (!itemStr.Contains("=")) { continue; }
+                    if (!itemStr.Contains('=')) { continue; }
 
                     string[] parts = itemStr.Split('=');
                     if (parts.Length < 2) { continue; }

@@ -40,10 +40,8 @@ namespace MechanikaDesign.ImageFormats
         /// <returns>Bitmap that contains the image that was read.</returns>
         public static Image Load(string fileName)
         {
-            using (var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                return Load(f);
-            }
+            using var f = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+            return Load(f);
         }
 
         /// <summary>
@@ -65,7 +63,6 @@ namespace MechanikaDesign.ImageFormats
             int compressionType = 0;
             int transparentColor = 0;
             bool haveCAMG = false;
-            bool haveSHAM = false;
             bool modeShamLaced = false;
             bool modePbm = false;
             bool modeAcbm = false;
@@ -75,7 +72,7 @@ namespace MechanikaDesign.ImageFormats
             int modeXBMI = -1;
 
             long bodyChunkPosition = -1;
-            BinaryReader reader = new BinaryReader(stream);
+            var reader = new BinaryReader(stream);
 
             byte[] tempBytes = new byte[65536];
 
@@ -212,7 +209,6 @@ namespace MechanikaDesign.ImageFormats
                 }
                 else if (chunkName == "SHAM")
                 {
-                    haveSHAM = true;
                     int bytesPerRow = 32;
                     int rowsInChunk = (int)(chunkSize - 2) / bytesPerRow;
                     if (rowsInChunk == imgHeight / 2)
@@ -344,7 +340,7 @@ namespace MechanikaDesign.ImageFormats
                 totalColors >>= delta;
             }
 
-            ByteRun1Decoder decompressor = new ByteRun1Decoder(stream);
+            var decompressor = new ByteRun1Decoder(stream);
             byte[] bmpData = new byte[(imgWidth + 1) * 4 * imgHeight];
 
             try

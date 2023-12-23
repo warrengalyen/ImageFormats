@@ -33,7 +33,7 @@ namespace MechanikaDesign.ImageFormats
         public static Image Load(string fileName)
         {
             Image bmp = null;
-            using (FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
+            using (var fs = new FileStream(fileName, FileMode.Open, FileAccess.Read))
             {
                 bmp = Load(fs);
             }
